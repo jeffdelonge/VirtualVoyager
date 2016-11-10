@@ -32,6 +32,8 @@ def get_best_location(keyword):
     '''
 
 
+    destinations = []
+
     keyword = urllib2.quote(keyword)
     url = "http://www.lonelyplanet.com/search?q="+keyword+"&type=place"
 
@@ -46,16 +48,20 @@ def get_best_location(keyword):
 
     request = urllib2.Request(url, headers = request_headers)
     webpage = urllib2.urlopen(request).read()
-    soup = BeautifulSoup(webpage, "lxml")
+    soup=BeautifulSoup(webpage, "lxml")
     #print soup.prettify().encode('UTF-8')
 
     content = soup.find_all("a", class_="link--wrapper")
-    topResult = content[0]
-    destination = ' '.join(topResult.getText().strip().split()[1:])
-    smallImage = topResult.find('img')['src']
-    image = smallImage[smallImage.index('http'):]
+    for i in [0,2,3,4,5]:
+        result = content[i]
+        name = result.find_all("h3", class_="search__result-title copy--h1")[0]
+        destination = name.getText().strip()#' '.join(topResult.getText().strip().split()[1:])
+        smallImage = result.find('img')['src']
+        image = smallImage[smallImage.index('http'):]
+        destinations.append((destination, image))
 
-    return destination, image
+
+    return destinations
 
 
 def get_location_coords(location_name):

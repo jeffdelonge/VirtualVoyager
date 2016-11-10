@@ -2,12 +2,14 @@ from bs4 import BeautifulSoup
 import urllib2
 
 def main():
-    keyword = "taj mahal"
-    destination, image = get_best_location(keyword)
-    print destination
-    print image
+    keyword = "rock climbing"
+    destinations = get_best_location(keyword)
+    for destination,image in destinations:
+        print destination, image
 
 def get_best_location(keyword):
+    destinations = []
+
     keyword = urllib2.quote(keyword)
     url = "http://www.lonelyplanet.com/search?q="+keyword+"&type=place"
 
@@ -26,12 +28,16 @@ def get_best_location(keyword):
     #print soup.prettify().encode('UTF-8')
 
     content = soup.find_all("a", class_="link--wrapper")
-    topResult = content[0]
-    destination = ' '.join(topResult.getText().strip().split()[1:])
-    smallImage = topResult.find('img')['src']
-    image = smallImage[smallImage.index('http'):]
+    for i in [0,2,3,4,5]:
+        result = content[i]
+        name = result.find_all("h3", class_="search__result-title copy--h1")[0]
+        destination = name.getText().strip()#' '.join(topResult.getText().strip().split()[1:])
+        smallImage = result.find('img')['src']
+        image = smallImage[smallImage.index('http'):]
+        destinations.append((destination, image))
 
-    return destination, image
+
+    return destinations
 
 
 if __name__ == "__main__":
