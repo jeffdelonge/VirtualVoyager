@@ -31,9 +31,6 @@ def get_best_location(keyword):
     return 'hello'
 
 
-def get_location(location_coordinates):
-
-
 def get_location_coords(location_name):
     rv = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI')
     data = rv.json()
@@ -89,8 +86,8 @@ def get_location_by_coords(coords):
     return location
 
 
-def create_trip_location(keyword, coords):
-    cur.execute('INSERT INTO TripLocation VALUES ({},{})'.format(keyword, coords))
+def create_trip_location(keyword, coords, name):
+    cur.execute('INSERT INTO TripLocation VALUES ({},{})'.format(keyword, coords, name))
 
 
 def create_trip(keyword, location_coordinates, user, date):
@@ -99,20 +96,22 @@ def create_trip(keyword, location_coordinates, user, date):
     '''
 
     # Get all associated go nexts with location
-    cur.execute('''SELECT next_name, next_coords 
-                   FROM Location Go Next 
-                   WHERE source_coords={}'''.format(location_coordinates))
+    cur.execute('''
+                SELECT next_name, next_coords 
+                FROM Location Go Next 
+                WHERE source_coords={}
+                '''.format(location_coordinates))
     rv = cur.fetchall()
     if not rv:
         raise ValueError('Location with coordinates {} does not exist'.format(location_coordinates))
 
-    locations = []
     # Get info and create location for all go nexts
+    locations = []
     for location in rv:
-        location = get_location_by_coords(location[1])
+        new_location = get_location_by_coords(location[1])
         if not location:
             create_location(location[0], location[1])
-        create_trip_location(keyword, location[1])
+        create_trip_location(keyword, location[1], location[0])
     
     cur.execute('''
                 INSERT INTO Trip
