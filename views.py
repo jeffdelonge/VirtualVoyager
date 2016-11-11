@@ -22,24 +22,7 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    '''cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
-    trip = cur.fetchone()
-    if trip:
-        keyword = trip[1]
-        cur.execute('''
-                    SELECT l1.Coordinates, l1.Description, l1.Eat, l1.See, l1.Do, l1.Name
-                    FROM Location l1, TripLocation tl1
-                    WHERE tl1.Trip={} AND l1.name = tl1.location_name
-                    '''.format(keyword))
-        trip = [location_to_dict(location) for location in cur.fetchall()]'''
-    #else:
     locations = get_best_location(keyword);
-    trip = []
-    for location in locations: 
-        location_dict = {'name':location[0], 'pic':location[1]}
-        trip.append(location_dict);
-        #top_result = locations[0]
-        #trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
     
     return render_template('webpage/trip.html', trip=trip)
 
@@ -61,8 +44,7 @@ def get_best_location(keyword):
         "Accept-Language": "en-US,en;q=0.5",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Referer": url,
-        "Connection": "keep-alive"
+        "Referer": url
     }
 
     request = urllib2.Request(url, headers = request_headers)
