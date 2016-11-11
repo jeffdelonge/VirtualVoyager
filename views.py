@@ -57,16 +57,10 @@ def get_best_location(keyword):
     url = "http://www.lonelyplanet.com/search?q="+keyword+"&type=place"
 
     #website prevents bot scraping. pretend to be mozilla
-    request_headers = {
-        "Accept-Language": "en-US,en;q=0.5",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Referer": url,
-        "Connection": "keep-alive"
-    }
-
-    request = urllib2.Request(url, headers = request_headers)
-    webpage = urllib2.urlopen(request).read()
+        #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
+        #webpage = urllib2.urlopen(request).read()
+    request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
+    webpage = request.text
     soup=BeautifulSoup(webpage, "lxml")
     #print soup.prettify().encode('UTF-8')
 
