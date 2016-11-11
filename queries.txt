@@ -1,2 +1,8 @@
 query used in finalpages.json
-SELECT p.page_title, t.old_text FROM `page` as p, `text` as t WHERE p.page_latest = t.old_id AND p.page_is_redirect = 0 AND p.page_title NOT LIKE "User%" AND p.page_title NOT LIKE "Wiki%"
+SELECT p.page_title, t.old_text FROM `page` as p, `text` as t WHERE p.page_latest = t.old_id AND p.page_is_redirect = 0
+AND p.page_title NOT LIKE "User%"
+AND p.page_title NOT LIKE "Wiki%"
+AND p.page_title NOT LIKE "%disambiguation%"
+AND p.page_title NOT LIKE "%.jpg"
+AND p.page_title NOT LIKE "%.png"
+AND p.page_title NOT LIKE "%.svg"
