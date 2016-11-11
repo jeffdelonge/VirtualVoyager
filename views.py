@@ -1,4 +1,4 @@
-from __init__ import app, cur 
+from __init__ import app, cur
 from flask import render_template
 import requests
 import datetime
@@ -9,20 +9,20 @@ import urllib2
 
 @app.route('/')
 def welcome():
-    return render_template('webpage/index.html') 
+    return render_template('webpage/index.html')
 
 
 @app.route('/example_query')
 def example_query():
     cur.execute("SELECT page_title FROM page WHERE page_title LIKE '%Republic%'")
-    query_name = "SELECT page_title FROM page WHERE page_title LIKE '%Republic%'" 
+    query_name = "SELECT page_title FROM page WHERE page_title LIKE '%Republic%'"
     query = str(cur.fetchall())
-    return render_template('example_query.html', query_name=query_name, query=query) 
+    return render_template('example_query.html', query_name=query_name, query=query)
 
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    '''cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
+    cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
     trip = cur.fetchone()
     if trip:
         keyword = trip[1]
@@ -31,10 +31,16 @@ def get_trip(keyword):
                     FROM Location l1, TripLocation tl1
                     WHERE tl1.Trip={} AND l1.name = tl1.location_name
                     .format(keyword))
-        trip = [location_to_dict(location) for location in cur.fetchall()]'''
+        trip = [location_to_dict(location) for location in cur.fetchall()]
     #else:
     locations = get_best_location(keyword);
-    
+    trip = []
+    for location in locations:
+        location_dict = {'name':location[0], 'pic':location[1]}
+        trip.append(location_dict);
+        #top_result = locations[0]
+        #trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
+
     return render_template('webpage/trip.html', trip=trip)
 
 
@@ -55,7 +61,8 @@ def get_best_location(keyword):
         "Accept-Language": "en-US,en;q=0.5",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Referer": url
+        "Referer": url,
+        "Connection": "keep-alive"
     }
 
     request = urllib2.Request(url, headers = request_headers)
@@ -100,13 +107,13 @@ def create_trip_location(keyword, coords, name):
 
 def create_trip(keyword, location_name, user, date):
     '''
-    Create trip from location's go next 
+    Create trip from location's go next
     '''
 
     # Get all associated go nexts with location
     cur.execute('''
-                SELECT next_name, next_coords 
-                FROM Location Go Next 
+                SELECT next_name, next_coords
+                FROM Location Go Next
                 WHERE source_name={}
                 '''.format(location_name))
     rv = cur.fetchall()
@@ -119,18 +126,17 @@ def create_trip(keyword, location_name, user, date):
         new_location = get_location_by_name(location[0])
         create_trip_location(keyword, location[1], location[0])
         locations.append(location_to_dict(new_location));
-    
+
     cur.execute('''
                 INSERT INTO Trip
                 VALUES ("{}", "{}", {})
                 '''.format(user, keyword, date))
-     
-    return locations 
+
+    return locations
 
 
 def location_to_dict(location):
-    location_dict = {'coords':location[0], 'description':location[1], 
+    location_dict = {'coords':location[0], 'description':location[1],
                      'eat':location2[2], 'see':location[3], 'do':location[4],
                      'name':location[5]}
     return location_dict
-    
