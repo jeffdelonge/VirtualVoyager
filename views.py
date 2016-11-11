@@ -18,7 +18,12 @@ def example_query():
 
 @app.route('/virtualvoyager/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    return "hello"
+    cur.execute("SELECT * FROM Trip WHERE Keyword={}".format(keyword))
+    trip = cur.fetchone()
+    if not trip:
+        locations = get_best_location(keyword);
+        top_result = locations[0]
+        trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
 
 
 def get_best_location(keyword):
@@ -38,38 +43,9 @@ def get_location_coords(location_name):
     return (coords['lat'], coords['lng'])
 
 
-def get_location_data(location_name, location_coords):
-    '''
-    Get dictionary of data associated with location 
-    '''
-    
-    # Get the page associated with the location
-    cur.execute("SELECT page_id FROM page WHERE page_title={}".format(location))
-    page_id = cur.fetchone()
-
-    # Get the wiki text associated with the page
-    cur.execute("SELECT old_text FROM text WHERE old_id={}".format(page_id))
-    location_text = cur.fetchone()
-
-    # Process text and return dict 
-    location_dict = process_wiki_text(location_text)
-    if location_coords:
-        location_dict['coords'] = location_coords
-    else:
-        location_dict['coords'] = get_location_coords(location_name)
-    return location_dict
-    
-
 def process_wiki_text(text):
     '''
     Extract pictures, description, eat, see, do, and go next from wiki text
-    '''
-    return 'hello'
-
-
-def create_location(location_name, location_coords=None):
-    '''
-    Create location 
     '''
     return 'hello'
 
@@ -87,10 +63,10 @@ def get_location_by_coords(coords):
 
 
 def create_trip_location(keyword, coords, name):
-    cur.execute('INSERT INTO TripLocation VALUES ({},{})'.format(keyword, coords, name))
+    cur.execute('INSERT INTO TripLocation VALUES ({},{},{})'.format(keyword, name, coords))
 
 
-def create_trip(keyword, location_coordinates, user, date):
+def create_trip(keyword, location_name, user, date):
     '''
     Create trip from location's go next 
     '''
@@ -99,8 +75,8 @@ def create_trip(keyword, location_coordinates, user, date):
     cur.execute('''
                 SELECT next_name, next_coords 
                 FROM Location Go Next 
-                WHERE source_coords={}
-                '''.format(location_coordinates))
+                WHERE source_name={}
+                '''.format(location_name))
     rv = cur.fetchall()
     if not rv:
         raise ValueError('Location with coordinates {} does not exist'.format(location_coordinates))
@@ -108,15 +84,15 @@ def create_trip(keyword, location_coordinates, user, date):
     # Get info and create location for all go nexts
     locations = []
     for location in rv:
-        new_location = get_location_by_coords(location[1])
-        if not location:
-            create_location(location[0], location[1])
+        new_location = get_location_by_name(location[0])
+        location_dict = {'coords':new_location[0], 'description':new_location[1], 
+                         'eat':new_location2[2], 'see':new_location[3], 'do':new_location[4],
+                         'name':new_location[5]}
         create_trip_location(keyword, location[1], location[0])
+        locations.append(location_dict);
     
     cur.execute('''
                 INSERT INTO Trip
                 VALUES ({}, {}, {})
                 '''.format(user, keyword, date))
      
-    
-
