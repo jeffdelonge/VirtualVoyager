@@ -20,7 +20,7 @@ def example_query():
     return render_template('example_query.html', query_name=query_name, query=query) 
 
 
-@app.route('/virtualvoyager/trips/<keyword>', methods=['GET'])
+@app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
     cur.execute("SELECT * FROM Trip WHERE Keyword={}".format(keyword))
     trip = cur.fetchone()
