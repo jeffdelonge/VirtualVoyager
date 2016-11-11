@@ -22,7 +22,7 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    cur.execute("SELECT * FROM Trip WHERE Keyword={}".format(keyword))
+    cur.execute('SELECT * FROM Trip WHERE Keyword="{}"'.format(keyword))
     trip = cur.fetchone()
     if trip:
         keyword = trip[1]
@@ -86,19 +86,19 @@ def get_location_coords(location_name):
 
 
 def get_location_by_name(name):
-    cur.execute("SELECT * FROM Location WHERE name={}".format(name))
+    cur.execute('SELECT * FROM Location WHERE name="{}"'.format(name))
     location = cur.fetchone()
     return location
 
 
 def get_location_by_coords(coords):
-    cur.execute("SELECT * FROM Location WHERE Coordinates={}".format(coords))
+    cur.execute('SELECT * FROM Location WHERE Coordinates={}'.format(coords))
     location = cur.fetchone()
     return location
 
 
 def create_trip_location(keyword, coords, name):
-    cur.execute('INSERT INTO TripLocation VALUES ({},{},{})'.format(keyword, name, coords))
+    cur.execute('INSERT INTO TripLocation VALUES ("{}","{}",{})'.format(keyword, name, coords))
 
 
 def create_trip(keyword, location_name, user, date):
@@ -125,7 +125,7 @@ def create_trip(keyword, location_name, user, date):
     
     cur.execute('''
                 INSERT INTO Trip
-                VALUES ({}, {}, {})
+                VALUES ("{}", "{}", {})
                 '''.format(user, keyword, date))
      
     return locations 
