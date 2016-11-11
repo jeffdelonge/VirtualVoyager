@@ -11,8 +11,8 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'cs411fa2016'
 app.config['MYSQL_DATABASE_DB'] = 'VirtualVoyager'
 app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 mysql.init_app(app)
-connection = mysql.connect()
-cur = connection.cursor()
+conn = mysql.connect()
+cur = conn.cursor()
 
 import views
 

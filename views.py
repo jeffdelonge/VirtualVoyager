@@ -22,6 +22,17 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
+    '''cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
+    trip = cur.fetchone()
+    if trip:
+        keyword = trip[1]
+        cur.execute(
+                    SELECT l1.Coordinates, l1.Description, l1.Eat, l1.See, l1.Do, l1.Name
+                    FROM Location l1, TripLocation tl1
+                    WHERE tl1.Trip={} AND l1.name = tl1.location_name
+                    .format(keyword))
+        trip = [location_to_dict(location) for location in cur.fetchall()]'''
+    #else:
     locations = get_best_location(keyword);
     
     return render_template('webpage/trip.html', trip=trip)

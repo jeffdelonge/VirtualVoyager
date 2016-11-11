@@ -1,28 +1,40 @@
-import json
+from __init__ import app, conn, cur
 from pprint import pprint
+import json
 
-def parseFor(text, startHeader, endHeader):
-	startIndex = text.find(startHeader)
-        newText = text[startIndex:]
-	endIndex = newText.find(endHeader)
-	if (startIndex == -1 or endIndex == -1):
-		print "start or end header not found!"
-		return
+def grabText(startHeader, endHeader, text):
+	startIndex = text.find(startHeader) + len(startHeader)
+	if (startIndex == -1):
+		print "ERROR: startHeader not found"
+		return "EMPTY"
 
-	resultString = text[startIndex+8:endIndex-1]
-	return resultString
+	resultText = text[startIndex:]
 
-#medium_test is 60000 words or more per page
-with open('finalpages.json') as data_file:
+	endIndex = resultText.find(endHeader)
+	if (endIndex == -1):
+		print "ERROR: endHeader not found"
+		return "EMPTY"
+
+	resultText = resultText[:endIndex]
+	return resultText
+
+#cur.execute('INSERT INTO Location (Name) VALUES (\"{}\")'.format("TEST INSERT FROM PYTHON"))
+
+with open('pages.json') as data_file:
 	data = json.load(data_file)
 
 for page in data['pages']:
 	print page['page_title']
 	text = page['old_text']
-#	print "SEE"
-#	print parseFor(text, '==See==', '\n==Do==')
-#	print "DO"
-#	print parseFor(text, '==Do==', '\n==Buy==')
-#	print "EAT"
-#	print parseFor(text, '==Eat==', '\n==Drink==')
-        print parseFor(text, '==Understand==', '\n==')
+	text = text.replace("\"", "")
+	text = text.replace("\'", "")
+	name = page['page_title'].encode('utf-8')
+	see = grabText('==See==\n', '\n==', text).encode('utf-8')
+	eat = grabText('==Eat==\n', '\n==', text).encode('utf-8')
+	do  = grabText('==Do==\n',  '\n==', text).encode('utf-8')
+	description = grabText('==Understand==\n', '\n==', text).encode('utf-8')
+	goNext = grabText('==Go Next==\n', '\n==', text).encode('utf-8')
+
+	cur.execute('INSERT INTO Location (Coordinates, Description, Do, Eat, Name, See) VALUES (0,\"{}\",\"{}\",\"{}\",\"{}\",\"{}\")'.format(description, do, eat, name, see))
+
+conn.commit()
