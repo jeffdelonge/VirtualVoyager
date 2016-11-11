@@ -22,7 +22,7 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
+    '''cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
     trip = cur.fetchone()
     if trip:
         keyword = trip[1]
@@ -31,11 +31,15 @@ def get_trip(keyword):
                     FROM Location l1, TripLocation tl1
                     WHERE tl1.Trip={} AND l1.name = tl1.location_name
                     '''.format(keyword))
-        trip = [location_to_dict(location) for location in cur.fetchall()]
-    else:
-        locations = get_best_location(keyword);
-        top_result = locations[0]
-        trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
+        trip = [location_to_dict(location) for location in cur.fetchall()]'''
+    #else:
+    locations = get_best_location(keyword);
+    trip = []
+    for location in locations: 
+        location_dict = {'name':location[0], 'pic':location[1]}
+        trip.append(location_dict);
+        #top_result = locations[0]
+        #trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
     
     return render_template('webpage/trip.html', trip=trip)
 
