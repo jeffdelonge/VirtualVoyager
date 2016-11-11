@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import urllib2
 
 def main():
-    keyword = "rock climbing"
+    keyword = "tropical"
     destinations = get_best_location(keyword)
     for destination,image in destinations:
         print destination, image
