@@ -1,6 +1,7 @@
 from __init__ import app, cur 
 from flask import render_template
 import requests
+import datetime
 
 #lonely planet imports
 from bs4 import BeautifulSoup
@@ -8,7 +9,7 @@ import urllib2
 
 @app.route('/')
 def welcome():
-    return render_template('index.html') 
+    return render_template('webpage/index.html') 
 
 
 @app.route('/example_query')
@@ -23,19 +24,28 @@ def example_query():
 def get_trip(keyword):
     cur.execute("SELECT * FROM Trip WHERE Keyword={}".format(keyword))
     trip = cur.fetchone()
-    if not trip:
+    if trip:
+        keyword = trip[1]
+        cur.execute('''
+                    SELECT l1.Coordinates, l1.Description, l1.Eat, l1.See, l1.Do, l1.Name
+                    FROM Location l1, TripLocation tl1
+                    WHERE tl1.Trip={} AND l1.name = tl1.location_name
+                    '''.format(keyword))
+        trip = [location_to_dict(location) for location in cur.fetchall()]
+    else:
         locations = get_best_location(keyword);
         top_result = locations[0]
         trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
+    
+    return render_template('webpage/trip.html', trip=trip)
 
 
 def get_best_location(keyword):
     '''
     Make requests to LostVoyager API with the user inputted keyword
-    Choose most popular location from request
+    Choose most popular locations from request
     Return information needed to make trip and location AND IMAGE URL
     '''
-
 
     destinations = []
 
@@ -65,7 +75,6 @@ def get_best_location(keyword):
         image = smallImage[smallImage.index('http'):]
         destinations.append((destination, image))
 
-
     return destinations
 
 
@@ -74,13 +83,6 @@ def get_location_coords(location_name):
     data = rv.json()
     coords = data['results']['geometry']['location']
     return (coords['lat'], coords['lng'])
-
-
-def process_wiki_text(text):
-    '''
-    Extract pictures, description, eat, see, do, and go next from wiki text
-    '''
-    return 'hello'
 
 
 def get_location_by_name(name):
@@ -118,14 +120,20 @@ def create_trip(keyword, location_name, user, date):
     locations = []
     for location in rv:
         new_location = get_location_by_name(location[0])
-        location_dict = {'coords':new_location[0], 'description':new_location[1], 
-                         'eat':new_location2[2], 'see':new_location[3], 'do':new_location[4],
-                         'name':new_location[5]}
         create_trip_location(keyword, location[1], location[0])
-        locations.append(location_dict);
+        locations.append(location_to_dict(new_location));
     
     cur.execute('''
                 INSERT INTO Trip
                 VALUES ({}, {}, {})
                 '''.format(user, keyword, date))
      
+    return locations 
+
+
+def location_to_dict(location):
+    location_dict = {'coords':location[0], 'description':location[1], 
+                     'eat':location2[2], 'see':location[3], 'do':location[4],
+                     'name':location[5]}
+    return location_dict
+    
