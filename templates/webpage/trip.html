@@ -10,20 +10,19 @@
 		<script src="kwicks-master/jquery.kwicks.js"></script>
    </head>
     <body>
-    	<a href="user.html">User's Profile</a>
-        {{ trip }}
+    	<a href="http://fa16-cs411-47.cs.illinois.edu/user_profile">User's Profile</a>
     {% for location in trip %}
-    	<h1 class="center">{{ location['name'] }}</h1>
-    	<img class="center" src={{ location['pic'] }} alt="Image of Location1" />
-		    <p class="center">{{ location['description'] }}<p>
+    	<h1 class="center">{{ location[4] }}</h1>
+    	<img class="center" src={{ location[6] }} alt="Image of Location1" />
+		    <p class="center">{{ location[0] }}<p>
 		      <ul class='kwicks kwicks-horizontal'>
-            <li class='kwicks-selected'><a>DO</a></li>
-            <li><a>SEE</a></li>
-            <li><a>EAT</a></li>
+            <li class='kwicks-selected'><a>DO <br> {{ location[3] }}</a></li>
+            <li><a>SEE <br> {{ location[2] }}</a></li>
+            <li><a>EAT <br> {{ location[1] }}</a></li>
     	    </ul>
     	<img class="maps" src="..." alt="Image from Google Maps" />
     {% endfor %}	
     	<h5 class="center">LIKE || DISLIKE</h5>
-    	<h3><a class = "center" href="index.html">Search for another trip</a></h3>
+    	<h3><a class = "center" href="http://fa16-cs411-47.cs.illinois.edu">Search for another trip</a></h3>
     </body>
     </html>

@@ -1,4 +1,4 @@
-from __init__ import app, cur
+from __init__ import app, cur, conn
 from flask import render_template
 import requests
 import datetime
@@ -22,26 +22,35 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    #cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
-    #trip = cur.fetchone()
-    #if trip:
-    #    keyword = trip[1]
-    #    cur.execute(
-    #                SELECT l1.Coordinates, l1.Description, l1.Eat, l1.See, l1.Do, l1.Name
-    #                FROM Location l1, TripLocation tl1
-    #                WHERE tl1.Trip={} AND l1.name = tl1.location_name
-    #                .format(keyword))
-    #    trip = [location_to_dict(location) for location in cur.fetchall()]
-    #else:
-    locations = get_best_location(keyword);
-    trip = []
-    for location in locations:
-        location_dict = {'name':location[0], 'pic':location[1]}
-        trip.append(location_dict);
-        #top_result = locations[0]
-        #trip = create_trip(keyword, top_result[0], "", datetime.datetime.now())
+    location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
+    location1 = list(cur.fetchone())
+    location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
+    location2 = cur.execute("SELECT * FROM Location WHERE Name='Nicaragua'")
+    location2 = list(cur.fetchone())
+    location2.append('http://servicesaws.iadb.org/wmsfiles/images/0x0/nicaragua-32899.jpg')
+    location3 = cur.execute("SELECT * FROM Location WHERE Name='Thailand'")
+    location3 = list(cur.fetchone())
+    location3.append('http://newmedia.thomson.co.uk/live/vol/0/921d4b57639916341dfa76e38310ff7bc13b11e2/1080x608/web/ASIAFAREASTTHAILANDTHAILANDDES_000423KHAOLAKRES_002378.jpg')
+    location4 = cur.execute("SELECT * FROM Location WHERE Name='Samoa'")
+    location4 = list(cur.fetchone())
+    location4.append('https://lonelyplanetimages.imgix.net/mastheads/GettyImages-167450923_full.jpg?sharp=10&vib=20&w=1200')
+    location5 = cur.execute("SELECT * FROM Location WHERE Name='Panama'")
+    location5 = list(cur.fetchone())
+    location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
+
+    trip = get_best_location(keyword)
+    '''if not trip: 
+        trip = [location1, location2, location3, location4, location5]
+        for location in trip:
+	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
+	    conn.commit()'''
 
     return render_template('webpage/trip.html', trip=trip)
+
+
+@app.route('/user_profile')
+def get_user_profile():
+    return render_template('webpage/user.html', user="Jeff")
 
 
 def get_best_location(keyword):
@@ -59,7 +68,7 @@ def get_best_location(keyword):
     #website prevents bot scraping. pretend to be mozilla
         #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
         #webpage = urllib2.urlopen(request).read()
-    request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
+    request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"}, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
     webpage = request.text
     soup=BeautifulSoup(webpage, "lxml")
     #print soup.prettify().encode('UTF-8')
@@ -123,7 +132,7 @@ def create_trip(keyword, location_name, user, date):
 
     cur.execute('''
                 INSERT INTO Trip
-                VALUES ("{}", "{}", {})
+                VALUES ('{}', '{}','{}')
                 '''.format(user, keyword, date))
 
     return locations
