@@ -1,0 +1,28 @@
+<!DOCTYPE html><html>
+    <head>
+        <meta charset="utf-8">
+        <title>TRIP</title>
+        <link href="css/styles.css" rel="stylesheet">
+  		<link rel="stylesheet" href="kwicks-master/jquery.kwicks.css" />
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="js/scripts.js"></script>
+		<script src="kwicks-master/jquery.kwicks.js"></script>
+   </head>
+    <body>
+    	<a href="http://fa16-cs411-47.cs.illinois.edu/user_profile">User's Profile</a>
+    {% for location in trip %}
+    	<h1 class="center">{{ location[4] }}</h1>
+    	<img class="center" src={{ location[6] }} alt="Image of Location1" />
+		    <p class="center">{{ location[0] }}<p>
+		      <ul class='kwicks kwicks-horizontal'>
+            <li class='kwicks-selected'><a>DO <br> {{ location[3] }}</a></li>
+            <li><a>SEE <br> {{ location[2] }}</a></li>
+            <li><a>EAT <br> {{ location[1] }}</a></li>
+    	    </ul>
+    	<img class="maps" src="..." alt="Image from Google Maps" />
+    {% endfor %}	
+    	<h5 class="center">LIKE || DISLIKE</h5>
+    	<h3><a class = "center" href="http://fa16-cs411-47.cs.illinois.edu">Search for another trip</a></h3>
+    </body>
+    </html>

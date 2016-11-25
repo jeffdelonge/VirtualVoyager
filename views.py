@@ -38,14 +38,15 @@ def get_trip(keyword):
     location5 = list(cur.fetchone())
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
-    trip = get_best_location(keyword)
+    trip = [location1, location2, location3, location4, location5]
+    #trip = get_best_location(keyword)
     '''if not trip: 
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
 	    conn.commit()'''
 
-    return render_template('webpage/trip.html', trip=trip)
+    return render_template('webpage2/trip.html', trip=trip)
 
 
 @app.route('/user_profile')
