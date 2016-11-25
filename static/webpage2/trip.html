@@ -23,30 +23,30 @@
 </header>
 
 <main class="o-main">
+{% for i in range(2) %}
   <div class="o-container">
-    {% for i in range(2) %}
     <div class="o-section">
       <div id="tabs" class="c-tabs no-js">
         <div class="c-tabs-nav">
           <a href="#" class="c-tabs-nav__link is-active">
             <i class="fa fa-home"></i>
-            <span>Home</span>
+            <span>About</span>
           </a>
           <a href="#" class="c-tabs-nav__link">
             <i class="fa fa-book"></i>
-            <span>Books</span>
+            <span>Eat</span>
           </a>
           <a href="#" class="c-tabs-nav__link">
             <i class="fa fa-heart"></i>
-            <span>Favourites</span>
+            <span>See</span>
           </a>
           <a href="#" class="c-tabs-nav__link">
             <i class="fa fa-calendar"></i>
-            <span>Calendar</span>
+            <span>Do</span>
           </a>
           <a href="#" class="c-tabs-nav__link">
             <i class="fa fa-cog"></i>
-            <span>Settings</span>
+            <span>Street</span>
           </a>
         </div>
         <div class="c-tab is-active">
@@ -86,12 +86,12 @@
         </div>
       </div>
     </div>
-    {% endfor %}
 
     <div class="o-section">
       <div id="github-icons"></div>
     </div>
   </div>
+{% endfor %}
 </main>
 
 <footer class="o-footer">
