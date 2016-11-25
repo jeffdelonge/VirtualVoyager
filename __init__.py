@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask.ext.mysql import MySQL
 import os
 
-tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 app = Flask(__name__, template_folder=tmpl_dir)
 
 mysql = MySQL()

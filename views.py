@@ -3,7 +3,7 @@ from flask import render_template
 import requests
 import datetime
 
-#lonely planet imports
+# lonely planet imports
 from bs4 import BeautifulSoup
 import urllib2
 
