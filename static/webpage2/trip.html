@@ -26,25 +26,25 @@
   <div class="o-container">
     {% for i in range(2) %}
     <div class="o-section">
-      <div id="tabs" class="c-tabs no-js">
+      <div id="tabs{{ i }}" class="c-tabs no-js">
         <div class="c-tabs-nav">
-          <a href="#" class="c-tabs-nav__link is-active">
+          <a href="#{{ i }}" class="c-tabs-nav__link is-active">
             <i class="fa fa-home"></i>
             <span>About</span>
           </a>
-          <a href="#" class="c-tabs-nav__link">
+          <a href="#{{ i }}" class="c-tabs-nav__link">
             <i class="fa fa-book"></i>
             <span>Eat</span>
           </a>
-          <a href="#" class="c-tabs-nav__link">
+          <a href="#{{ i }}" class="c-tabs-nav__link">
             <i class="fa fa-heart"></i>
             <span>See</span>
           </a>
-          <a href="#" class="c-tabs-nav__link">
+          <a href="#{{ i }}" class="c-tabs-nav__link">
             <i class="fa fa-calendar"></i>
             <span>Do</span>
           </a>
-          <a href="#" class="c-tabs-nav__link">
+          <a href="#{{ i }}" class="c-tabs-nav__link">
             <i class="fa fa-cog"></i>
             <span>Street</span>
           </a>
@@ -93,7 +93,7 @@
     <script src="{{ url_for('static', filename='webpage2/js/src/tabs.js') }}"></script>
     <script>
       var myTabs = tabs({
-        el: '#tabs',
+        el: '#tabs{{ i }}',
         tabNavigationLinks: '.c-tabs-nav__link',
         tabContentContainers: '.c-tab'
       });
