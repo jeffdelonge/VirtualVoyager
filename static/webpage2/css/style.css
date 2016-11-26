@@ -84,7 +84,7 @@ h6 {
 
 ----------------------------------------------------------------------------- */
 a {
-  color: #dc446e;
+  color: #3399ff;
   text-decoration: none;
 }
 
@@ -154,7 +154,7 @@ img {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background-color: #dc446e;
+  background-color: #3399ff #3399ff;
 }
 
 .o-header-nav__link {
@@ -247,13 +247,13 @@ img {
   display: block;
   margin: 0;
   padding: 4px 24px;
-  border: solid 2px #dc446e;
+  border: solid 2px #3399ff;
 }
 
 .o-sub-nav__link:hover,
 .o-sub-nav__item.active .o-sub-nav__link {
   color: #fff;
-  background-color: #dc446e;
+  background-color: #3399ff;
 }
 
 /* -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ img {
 }
 
 .c-tabs-nav__link.is-active {
-  color: #dc446e;
+  color: #3399ff;
   background-color: #e7e7e7;
 }
 
