@@ -22,7 +22,7 @@ def example_query():
 
 @app.route('/trips/<keyword>', methods=['GET'])
 def get_trip(keyword):
-    location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
+    '''location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
     location1 = list(cur.fetchone())
     location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
     location2 = cur.execute("SELECT * FROM Location WHERE Name='Nicaragua'")
@@ -38,7 +38,7 @@ def get_trip(keyword):
     location5 = list(cur.fetchone())
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
-    trip = [location1, location2, location3, location4, location5]
+    trip = [location1, location2, location3, location4, location5]'''
     #trip = get_best_location(keyword)
     '''if not trip: 
         trip = [location1, location2, location3, location4, location5]
@@ -46,7 +46,7 @@ def get_trip(keyword):
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
 	    conn.commit()'''
 
-    return render_template('webpage2/trip.html', trip=trip)
+    return render_template('webpage2/trip.html', trip=None)
 
 
 @app.route('/user_profile')
