@@ -45,7 +45,7 @@ def get_trip(keyword):
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
 	    conn.commit()'''
-
+    
     return render_template('webpage2/trip.html', trip=None)
 
 
@@ -86,6 +86,12 @@ def get_best_location(keyword):
     return destinations
 
 
+def get_trip_by_keyword(keyword):
+    cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
+    trip = cur.fetchone()
+    return trip
+
+
 def get_location_coords(location_name):
     rv = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'.format(location_name))
     data = rv.json()
@@ -94,13 +100,13 @@ def get_location_coords(location_name):
 
 
 def get_location_by_name(name):
-    cur.execute('SELECT * FROM Location WHERE name="{}"'.format(name))
+    cur.execute("SELECT * FROM Location WHERE Name='{}'".format(name))
     location = cur.fetchone()
     return location
 
 
 def get_location_by_coords(coords):
-    cur.execute('SELECT * FROM Location WHERE Coordinates={}'.format(coords))
+    cur.execute("SELECT * FROM Location WHERE Coordinates='{}'".format(coords))
     location = cur.fetchone()
     return location
 

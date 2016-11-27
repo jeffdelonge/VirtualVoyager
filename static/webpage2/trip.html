@@ -14,8 +14,9 @@
 
 <header class="o-header">
   <nav class="o-header-nav">
-    <a href="http://callmenick.com/_development/angular/intro-to-angular/" class="o-header-nav__link"><i class="fa fa-arrow-left"></i> Previous Demo</a>
-    <a href="http://callmenick.com/post/simple-responsive-tabs-javascript-css" class="o-header-nav__link">Back To Article <i class="fa fa-star"></i></a>
+    <a href="http://fa16-cs411-47.cs.illinois.edu" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>Back to Search</a>
+    VirtualVoyager
+    <a href="http://fa16-cs411-47.cs.illinois.edu/user_profile" class="o-header-nav__link">My Profile<i class="fa fa-star"></i></a>
   </nav>
   <div class="o-container">
     <h1 class="o-header__title">Your Trip</h1>
@@ -24,7 +25,7 @@
 
 <main class="o-main">
   <div class="o-container">
-    {% for i in range(2) %}
+    {% for i in len(trip) %}
     <div class="o-section">
       <div id="tabs{{ i }}" class="c-tabs no-js">
         <div class="c-tabs-nav">
