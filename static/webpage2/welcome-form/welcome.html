@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='webpage2/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='webpage2/css/style.min.css') }}" rel="stylesheet" type="text/css">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='webpage2/welcome-form/css/style.css') }}" type="text/css">
+</head>
+<body>
+
+<header class="o-header">
+  <nav class="o-header-nav">
+    <a href="http://fa16-cs411-47.cs.illinois.edu" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>Home</a>
+    <h1 class="o-header_title" style="color:white;" align="center">VirtualVoyager</h1>
+    <a href="http://fa16-cs411-47.cs.illinois.edu/user_profile" class="o-header-nav__link">  My Profile<i class="fa fa-star"></i></a>
+  </nav>
+  <div class="o-container">
+    <h1 class="o-header__title">Welcome</h1>
+  </div>
+</header>
+
+
+
+<div class="form">
+
+    <ul class="tab-group">
+      <li class="tab active"><a href="#signup">Sign Up</a></li>
+      <li class="tab"><a href="#login">Log In</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="signup">
+        <h1>Sign Up for Free</h1>
+
+        <form action="/?signup=True" method="post">
+
+        <div class="top-row">
+          <div class="field-wrap">
+            <label>
+              First Name<span class="req">*</span>
+            </label>
+            <input type="text" required autocomplete="off" />
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Last Name<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off"/>
+          </div>
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Email Address<span class="req">*</span>
+          </label>
+          <input type="email"required autocomplete="off"/>
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Set A Password<span class="req">*</span>
+          </label>
+          <input type="password"required autocomplete="off"/>
+        </div>
+
+        <button type="submit" class="button button-block"/>Get Started</button>
+
+        </form>
+
+      </div>
+
+      <div id="login">
+        <h1>Welcome Back!</h1>
+
+        <form action="/?login=True" method="post">
+
+        <div class="field-wrap">
+          <label>
+            Name <span class="req">*</span>
+          </label>
+          <input type="email"required autocomplete="off"/>
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Username <span class="req">*</span>
+          </label>
+          <input type="email"required autocomplete="off"/>
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Password<span class="req">*</span>
+          </label>
+          <input type="password"required autocomplete="off"/>
+        </div>
+
+        <button class="button button-block"/>Log In</button>
+
+        </form>
+
+      </div>
+
+    </div><!-- tab-content -->
+
+</div> <!-- /form -->
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="{{ url_for('static', filename='webpage2/js/index.js') }}""js/index.js"></script>
+
+</body>
+
+<footer class="o-footer">
+  <div class="o-container">
+    <small>&copy; 2016, VirtualVoyager</small>
+  </div>
+</footer>
+
+</body>
+</html>

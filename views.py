@@ -1,5 +1,5 @@
 from __init__ import app, cur, conn
-from flask import render_template
+from flask import render_template, redirect
 from selenium import webdriver
 import requests
 import datetime
@@ -9,38 +9,40 @@ from pyvirtualdisplay import Display
 from bs4 import BeautifulSoup
 import urllib2
 
+url = 'http://fa16-cs411-47.cs.illinois.edu'
+
 
 @app.route('/')
-def login_user():
+def welcome_user():
     username = request.form['username']
 
     if not username:
-        return render_template('webpage2/login.html')
+        return render_template('webpage2/welcome.html')
     else:
         password = request.form['password']     
-        if authenticated(user, password):
-            return render_template('webpage/index.html', username=username)
-        else
-            return render_template('webpage2/login.html', login_failed=True)
 
+        if request.args.get("login"):
+            valid_login = username and password and authenticated(user, password)
+            if valid_login:
+                return redirect(url + "/{}/search".format(username))
+            else
+                return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
 
-@app.route('/create_user'):
-    username = request.form['username']
-    password = request.form['password']
-    name = request.form['name']
+        elif request.args.get("signup"):
+            name = request.form['name']
+            valid_signup = username and password and name and create_user(username, password, name)
+            if valid_signup:
+                return redirect(url + "/{}/search".format(username))
+            else:
+                return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
+            
 
-    if username and create_user(username, password, name):    
-        return render_template('webpage/index.html', username=username)
-    else:
-        return render_template('webpage2/signup.html', user_exists=True)
-
-
-@app.route('/<username>')
-def login(username):
+@app.route('/<username>/search')
+def search(username):
     if not authenticated(username):
-        return render_templated('webpage2/login.html', login_failed=True) 
+        return render_template('webpage2/welcome-form/welcome.html', login_failed=True) 
 
-    return render_template('webpage/index.html', username=username)
+    return render_template('webpage2/search.html', username=username)
 
 
 @app.route('/example_query')
@@ -54,7 +56,7 @@ def example_query():
 @app.route('/<username>/trips/<keyword>', methods=['GET'])
 def get_trip(username, keyword):
     if not authenticated(username):
-        return render_templated('webpage2/login.html', login_failed=True) 
+        return render_templated('webpage2/welcome-form/welcome.html', login_failed=True) 
         
     '''location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
     location1 = list(cur.fetchone())
