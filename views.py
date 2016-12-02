@@ -109,7 +109,6 @@ def authenticated(username, password=None):
         change_user_logged_in(username, True)
         return True
     else:
-	raise Exception("Password: {}, Real Password: {}, User: {}".format(password, user_password, user))
         return False
 
 
