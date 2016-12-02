@@ -1,5 +1,5 @@
 from __init__ import app, cur, conn
-from flask import render_template, redirect
+from flask import render_template, redirect, request
 from selenium import webdriver
 import requests
 import datetime
@@ -14,10 +14,8 @@ url = 'http://fa16-cs411-47.cs.illinois.edu'
 
 @app.route('/')
 def welcome_user():
-    username = request.form['username']
-
-    if not username:
-        return render_template('webpage2/welcome.html')
+    if 'username' not in request.form.values():
+        return render_template('webpage2/welcome-form/welcome.html')
     else:
         password = request.form['password']     
 
@@ -214,7 +212,7 @@ def get_user_by_username(username):
 
 
 def change_user_logged_in(username, logged_in):
-    cur.execute("UPDATE User SET LoggedIn='{}' WHERE Username='{}'".format(logged_in, username)
+    cur.execute("UPDATE User SET LoggedIn='{}' WHERE Username='{}'".format(logged_in, username))
 
 
 def create_trip(keyword, location_name, user, date):
