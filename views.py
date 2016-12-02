@@ -12,21 +12,21 @@ import urllib2
 url = 'http://fa16-cs411-47.cs.illinois.edu'
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def welcome_user():
-    if 'username' not in request.form.values():
+    if request.method == 'GET':
         return render_template('webpage2/welcome-form/welcome.html')
     else:
-        password = request.form['password']     
-
-        if request.args.get("login"):
+	username = request.form.get('username', None)
+        password = request.form.get('password', None)
+        if request.args.get("login", None):
             valid_login = username and password and authenticated(user, password)
             if valid_login:
                 return redirect(url + "/{}/search".format(username))
             else:
                 return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
 
-        elif request.args.get("signup"):
+        elif request.args.get("signup", None):
             name = request.form['name']
             valid_signup = username and password and name and create_user(username, password, name)
             if valid_signup:
@@ -191,18 +191,21 @@ def get_location_by_coords(coords):
 
 def create_trip_location(keyword, location_name):
     cur.execute("INSERT INTO TripLocation VALUES ('{}','{}')".format(keyword, location_name))
+    conn.commit()
 
 
 def create_trip_user(keyword, username, date):
     cur.execute("INSERT INTO TripUser VALUES ('{}','{}','{}')".format(keyword, username, date))
+    conn.commit()
 
 
-def create_user(name, username, password):
+def create_user(username, password, name):
     user = get_user_by_username(username)
     if user:
         return False
     else:
-        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, True))
+        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, 1))
+	conn.commit()
         return True
 
 
