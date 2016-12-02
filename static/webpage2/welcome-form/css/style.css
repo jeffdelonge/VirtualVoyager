@@ -7,18 +7,18 @@ html {
 }
 
 body {
-  background: #c1bdba;
+  background: #fff;
   font-family: 'Titillium Web', sans-serif;
 }
 
 a {
   text-decoration: none;
-  color: #1ab188;
+  color: #3399ff;
   -webkit-transition: .5s ease;
   transition: .5s ease;
 }
 a:hover {
-  color: #179b77;
+  color: #0073e6;
 }
 
 .form {
@@ -55,11 +55,11 @@ a:hover {
   transition: .5s ease;
 }
 .tab-group li a:hover {
-  background: #179b77;
+  background: #0073e6;
   color: #ffffff;
 }
 .tab-group .active a {
-  background: #1ab188;
+  background: #3399ff;
   color: #ffffff;
 }
 
