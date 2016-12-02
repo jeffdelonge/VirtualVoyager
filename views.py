@@ -20,7 +20,7 @@ def welcome_user():
 	username = request.form.get('username', None)
         password = request.form.get('password', None)
         if request.args.get("login", None):
-            valid_login = username and password and authenticated(user, password)
+            valid_login = username and password and authenticated(username, password)
             if valid_login:
                 return redirect(url + "/{}/search".format(username))
             else:
