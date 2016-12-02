@@ -1,7 +1,9 @@
 from __init__ import app, cur, conn
 from flask import render_template
+from selenium import webdriver
 import requests
 import datetime
+from pyvirtualdisplay import Display
 
 # lonely planet imports
 from bs4 import BeautifulSoup
@@ -39,7 +41,7 @@ def get_trip(keyword):
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
     trip = [location1, location2, location3, location4, location5]'''
-    #trip = get_best_location(keyword)
+    trip = get_best_location(keyword);
     '''if not trip: 
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
@@ -61,16 +63,23 @@ def get_best_location(keyword):
     Return information needed to make trip and location AND IMAGE URL
     '''
 
-    destinations = []
+    destinations = [];
 
     keyword = urllib2.quote(keyword)
-    url = "http://www.lonelyplanet.com/search?q="+keyword+"&type=place"
+    url = "http://www.lonelyplanet.com/search?q={}&type=place".format(keyword)
 
     #website prevents bot scraping. pretend to be mozilla
-        #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
-        #webpage = urllib2.urlopen(request).read()
-    request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"}, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
-    webpage = request.text
+    #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
+    #webpage = urllib2.urlopen(request).read()
+    #request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.4.0"})#, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
+	
+    display = Display(visible=0, size=(800,600))
+    display.start()
+    driver = webdriver.Firefox()
+    driver.get(url)
+    webpage = driver.page_source
+    driver.close()
+
     soup=BeautifulSoup(webpage, "lxml")
     #print soup.prettify().encode('UTF-8')
 
