@@ -87,7 +87,7 @@ def get_trip(username, keyword):
         best_location = locations[0] 
          
 '''
-
+    trip = get_best_locations(keyword)
     
     return render_template('webpage2/trip.html', trip=None)
 
