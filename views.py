@@ -25,7 +25,7 @@ def welcome_user():
             valid_login = username and password and authenticated(user, password)
             if valid_login:
                 return redirect(url + "/{}/search".format(username))
-            else
+            else:
                 return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
 
         elif request.args.get("signup"):
