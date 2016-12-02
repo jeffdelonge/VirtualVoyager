@@ -14,7 +14,7 @@
   <script>
     function myButton()
     {
-      var keyword = $('#searchbar').val();
+      var keyword = document.getElementById("searchbar").val();
       window.location += + keyword;
     }
   </script>
@@ -142,7 +142,7 @@ input:-moz-placeholder {
 		<div class="flexsearch--wrapper">
 			<form class="flexsearch--form" action="javascript:myButton()" method="post">
 				<div class="flexsearch--input-wrapper">
-					<input href="searchbar" id="searchbar" class="flexsearch--input" type="search" placeholder="What kind of trip are you looking for?">
+					<input id="searchbar" class="flexsearch--input" type="search" placeholder="What kind of trip are you looking for?">
 				</div>
 				<input class="flexsearch--submit" type="submit" value="&#10140;" />
 			</form>
