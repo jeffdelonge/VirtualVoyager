@@ -103,10 +103,10 @@ def authenticated(username, password=None):
     user_password = user[1]
     logged_in = user[3]
 
-    if not password and logged_in == 'True':
+    if not password and logged_in:
         return True
     elif user_password == password:
-        change_user_logged_in(username, 'True')
+        change_user_logged_in(username, True)
         return True
     else:
 	raise Exception("Password: {}, Real Password: {}, User: {}".format(password, user_password, user))
@@ -217,7 +217,7 @@ def get_user_by_username(username):
 
 
 def change_user_logged_in(username, logged_in):
-    cur.execute("UPDATE User SET LoggedIn='{}' WHERE Username='{}'".format(logged_in, username))
+    cur.execute("UPDATE User SET LoggedIn={} WHERE Username='{}'".format(logged_in, username))
     conn.commit()
 
 
