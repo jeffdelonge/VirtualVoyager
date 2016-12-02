@@ -3,6 +3,7 @@ from flask import render_template, redirect, request
 from selenium import webdriver
 import requests
 import datetime
+import sys
 from pyvirtualdisplay import Display
 
 # lonely planet imports
@@ -38,7 +39,7 @@ def welcome_user():
 @app.route('/<username>/search')
 def search(username):
     if not authenticated(username):
-        return render_template('webpage2/welcome-form/welcome.html', login_failed=True) 
+        return redirect(url)
 
     return render_template('webpage2/search.html', username=username)
 
@@ -108,6 +109,7 @@ def authenticated(username, password=None):
         change_user_logged_in(username, 'True')
         return True
     else:
+	raise Exception("Password: {}, Real Password: {}, User: {}".format(password, user_password, user))
         return False
 
 
