@@ -52,7 +52,7 @@ def example_query():
     return render_template('example_query.html', query_name=query_name, query=query)
 
 
-@app.route('/<username>/trips/<keyword>', methods=['GET'])
+@app.route('/<username>/search/<keyword>', methods=['GET'])
 def get_trip(username, keyword):
     if not authenticated(username):
         return render_templated('webpage2/welcome-form/welcome.html', login_failed=True) 
