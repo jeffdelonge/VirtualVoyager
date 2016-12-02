@@ -102,10 +102,10 @@ def authenticated(username, password=None):
     user_password = user[1]
     logged_in = user[3]
 
-    if not password and logged_in:
+    if not password and logged_in == 'True':
         return True
     elif user_password == password:
-        change_user_logged_in(username, True)
+        change_user_logged_in(username, 'True')
         return True
     else:
         return False
@@ -204,18 +204,19 @@ def create_user(username, password, name):
     if user:
         return False
     else:
-        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, 1))
+        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, 'True'))
 	conn.commit()
         return True
 
 
 def get_user_by_username(username):
-    cur.execute("SELECT * FROM User WHERE Username='{}'".format(username))
+    cur.execute("SELECT * FROM `User` WHERE Username='{}'".format(username))
     return cur.fetchone()
 
 
 def change_user_logged_in(username, logged_in):
     cur.execute("UPDATE User SET LoggedIn='{}' WHERE Username='{}'".format(logged_in, username))
+    conn.commit()
 
 
 def create_trip(keyword, location_name, user, date):
