@@ -154,7 +154,7 @@ img {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background-color: #3399ff #3399ff;
+  background-color: #3399ff
 }
 
 .o-header-nav__link {
