@@ -40,7 +40,7 @@
     <meta id="like-data" data-name="{{liked}}">
     <meta id="like-button-url" data-name="{{ url_for('static', filename='webpage2/likebutton.png') }}">
     <meta id="dislike-button-url" data-name="{{ url_for('static', filename='webpage2/dislikebutton.png')}}">
-    <img class="like" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+    <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
   </div>
 </header>
 
