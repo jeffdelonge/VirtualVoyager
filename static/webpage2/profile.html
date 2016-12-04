@@ -13,75 +13,46 @@
 
 <header class="o-header">
   <nav class="o-header-nav">
-    <a href="http://fa16-cs411-47.cs.illinois.edu" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>Back to Search  </a>
+    <a href="http://fa16-cs411-47.cs.illinois.edu/{{username}}/search" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>   Back to Search</a>
     <h1 class="o-header_title" style="color:white;" align="center">VirtualVoyager</h1>
-    <a href="http://fa16-cs411-47.cs.illinois.edu/user_profile" class="o-header-nav__link">  My Profile<i class="fa fa-star"></i></a>
+    <a href="http://fa16-cs411-47.cs.illinois.edu/{{username}}/logout" class="o-header-nav__link"><i class="fa fa-star"></i>Logout  </a>
   </nav>
   <div class="o-container">
-    <h1 class="o-header__title">Your Trip</h1>
+    <h1 class="o-header__title">Your Profile</h1>
   </div>
 </header>
 
 <main class="o-main">
   <div class="o-container">
-    {% for i in range(len(trip)) %}
     <div class="o-section">
-      <div id="tabs{{ i }}" class="c-tabs no-js">
+
+      <div id="tabs" class="c-tabs no-js">
         <div class="c-tabs-nav">
-          <a href="#{{ i }}" class="c-tabs-nav__link is-active">
+          <a href="#PastTrips" class="c-tabs-nav__link is-active">
             <i class="fa fa-home"></i>
-            <span>About</span>
+            <span>Past Trips</span>
           </a>
-          <a href="#{{ i }}" class="c-tabs-nav__link">
+          <a href="#RecTrips" class="c-tabs-nav__link">
             <i class="fa fa-book"></i>
-            <span>Eat</span>
-          </a>
-          <a href="#{{ i }}" class="c-tabs-nav__link">
-            <i class="fa fa-heart"></i>
-            <span>See</span>
-          </a>
-          <a href="#{{ i }}" class="c-tabs-nav__link">
-            <i class="fa fa-calendar"></i>
-            <span>Do</span>
-          </a>
-          <a href="#{{ i }}" class="c-tabs-nav__link">
-            <i class="fa fa-cog"></i>
-            <span>Street</span>
+            <span>Recommended Trips</span>
           </a>
         </div>
         <div class="c-tab is-active">
           <div class="c-tab__content">
-            <h2>{{ trip[i]['name'] }}</h2>
-            <p>{{ trip[i]['description'] }}</p>
-            <img src="{{ trip[i]['photo'] }}">
+            <h2>All Past Trips</h2>
+            <p>Sample Text</p>
+            <p>Sample Text</p>
           </div>
         </div>
         <div class="c-tab">
           <div class="c-tab__content">
-            <h2>Try local cuisine!</h2>
-            <p>{{trip[i]['eat']}}</p>
-          </div>
-        </div>
-        <div class="c-tab">
-          <div class="c-tab__content">
-            <h2>Check out local sights!</h2>
-            <p>{{ trip[i]['see']}}</p>
-          </div>
-        </div>
-        <div class="c-tab">
-          <div class="c-tab__content">
-            <h2>Try out new activities!</h2>
-            <p>{{ trip[i]['do']}}
-          </div>
-        </div>
-        <div class="c-tab">
-          <div class="c-tab__content">
-            <h2>Street View</h2>
+            <h2>Trips Recommended by Likes</h2>
             <p>Sample Text</p>
             <p>Sample Text</p>
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="o-section">
@@ -90,15 +61,15 @@
     <script src="{{ url_for('static', filename='webpage2/js/src/tabs.js') }}"></script>
     <script>
       var myTabs = tabs({
-        el: '#tabs{{ i }}',
+        el: '#tabs',
         tabNavigationLinks: '.c-tabs-nav__link',
         tabContentContainers: '.c-tab'
       });
 
       myTabs.init();
     </script>
-    {% endfor %}
   </div>
+
 </main>
 
 <footer class="o-footer">

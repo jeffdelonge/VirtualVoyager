@@ -63,7 +63,7 @@ def get_trip(username, keyword):
     if not authenticated(username):
         return render_templated('webpage2/welcome-form/welcome.html', login_failed=True) 
         
-    '''location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
+    location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
     location1 = list(cur.fetchone())
     location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
     location2 = cur.execute("SELECT * FROM Location WHERE Name='Nicaragua'")
@@ -79,7 +79,8 @@ def get_trip(username, keyword):
     location5 = list(cur.fetchone())
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
-    trip = [location1, location2, location3, location4, location5]'''
+    trip = [location1, location2, location3, location4, location5]
+    trip = [location_to_dict(location) for location in trip]
     '''if not trip: 
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
@@ -93,10 +94,10 @@ def get_trip(username, keyword):
         possible_locations = get_best_locations(keyword)
         best_location = locations[0] 
          
-'''
     trip = get_best_locations(keyword)
+'''
     
-    return render_template('webpage2/trip.html', trip=None)
+    return render_template('webpage2/trip.html', trip=trip)
 
 
 @app.route('/user_profile')
