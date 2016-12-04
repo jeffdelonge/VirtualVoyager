@@ -263,6 +263,6 @@ def create_trip(keyword, location_name, user, date):
 
 def location_to_dict(location):
     location_dict = {'coords':location[0], 'description':location[1],
-                     'eat':location2[2], 'see':location[3], 'do':location[4],
+                     'eat':location[2], 'see':location[3], 'do':location[4],
                      'name':location[5], 'photo':location[6]}
     return location_dict
