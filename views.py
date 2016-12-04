@@ -126,15 +126,18 @@ def get_best_locations(keyword):
 
     keyword = urllib2.quote(keyword)
     url = "http://www.lonelyplanet.com/search?q={}&type=place".format(keyword)
+    gecko_driver_log_path = '/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log'
+    firefox_binary_path = '/usr/bin/firefox'
 
     #website prevents bot scraping. pretend to be mozilla
     #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
     #webpage = urllib2.urlopen(request).read()
     #request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.4.0"})#, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
 	
+    
     display = Display(visible=0, size=(800,600))
     display.start()
-    driver = webdriver.Firefox(log_path='/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log')
+    driver = webdriver.Firefox(log_path=gecko_driver_log_path, firefox_binary=firefox_binary_path)
     driver.get(url)
     webpage = driver.page_source
     driver.close()
