@@ -37,7 +37,7 @@ def welcome_user():
             
 
 @app.route('/<username>/logout')
-def logout_user():
+def logout_user(username):
     change_user_logged_in(username, False)
     return redirect(url)
 
