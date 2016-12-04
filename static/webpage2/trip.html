@@ -17,12 +17,15 @@
   <script>
     function clickLike() {
       var button = document.getElementById("likebutton");
-      var liked = document.getElementById("like-data").data();
+      var likeMeta = document.getElementById("like-data");
+      var liked = likeMeta.getAttribute("data-name");
       if (like == "True") {
-        button.src = document.getElementById("like-button-url").data();
+        button.src = document.getElementById("dislike-button-url").getAttribute("data-name");
+        likeMeta.setAttribute("data-name", "False");
       }
       else {
-        button.src = document.getElementById("dislike-button-url").data()
+        button.src = document.getElementById("like-button-url").getAttribute("data-name");
+        likeMeta.setAttribute("data-name", "True");
       }
     }
   </script>
@@ -40,7 +43,11 @@
     <meta id="like-data" data-name="{{liked}}">
     <meta id="like-button-url" data-name="{{ url_for('static', filename='webpage2/likebutton.png') }}">
     <meta id="dislike-button-url" data-name="{{ url_for('static', filename='webpage2/dislikebutton.png')}}">
-    <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+    {% if liked %}
+      <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+    {% else %}
+      <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/dislikebutton.png') }}">
+    {% endif %}
   </div>
 </header>
 
