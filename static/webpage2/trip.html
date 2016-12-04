@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='webpage2/css/style.min.css') }}" rel="stylesheet" type="text/css">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <link rel="icon" type="image/png" href="./favicon.png">
+  <style>
+    .like {
+      width: 5vw;
+      height: 5vw;
+    }
+  </style>
 </head>
 <body>
 
@@ -19,7 +25,7 @@
   </nav>
   <div class="o-container">
     <h1 class="o-header__title">Your {{keyword}} Trip</h1>
-    <img src="{{ url_for('static', filename='webpage2/likebutton.png') }}" width=2vw height=2vw>
+    <img class="like" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
   </div>
 </header>
 
