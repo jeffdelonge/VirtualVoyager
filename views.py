@@ -97,7 +97,7 @@ def get_trip(username, keyword):
     trip = get_best_locations(keyword)
 '''
     
-    return render_template('webpage2/trip.html', trip=trip, keyword=keyword)
+    return render_template('webpage2/trip.html', trip=trip, keyword=keyword, liked="False")
 
 
 @app.route('/user_profile')
