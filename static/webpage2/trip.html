@@ -12,6 +12,7 @@
     .like {
       width: 5vw;
       height: 5vw;
+      margin: auto;
     }
   </style>
   <script>
@@ -40,14 +41,6 @@
   </nav>
   <div class="o-container">
     <h1 class="o-header__title">Your {{keyword}} Trip</h1>
-    <meta id="like-data" data-name="{{liked}}">
-    <meta id="like-button-url" data-name="{{ url_for('static', filename='webpage2/likebutton.png') }}">
-    <meta id="dislike-button-url" data-name="{{ url_for('static', filename='webpage2/dislikebutton.png')}}">
-    {% if liked %}
-      <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
-    {% else %}
-      <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/dislikebutton.png') }}">
-    {% endif %}
   </div>
 </header>
 
@@ -128,6 +121,16 @@
     </script>
     {% endfor %}
   </div>
+
+  <meta id="like-data" data-name="{{liked}}">
+  <meta id="like-button-url" data-name="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+  <meta id="dislike-button-url" data-name="{{ url_for('static', filename='webpage2/dislikebutton.png')}}">
+  {% if liked %}
+    <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+  {% else %}
+    <img class="like" onclick="javascript:clickLike()" id="likebutton" src="{{ url_for('static', filename='webpage2/dislikebutton.png') }}">
+  {% endif %}
+
 </main>
 
 <footer class="o-footer">
