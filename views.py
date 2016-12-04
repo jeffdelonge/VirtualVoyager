@@ -126,6 +126,7 @@ def get_best_locations(keyword):
 
     keyword = urllib2.quote(keyword)
     url = "http://www.lonelyplanet.com/search?q={}&type=place".format(keyword)
+    url = "http://www.google.com"
     gecko_driver_log_path = '/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log'
     firefox_binary_path = '/usr/bin/firefox'
 
