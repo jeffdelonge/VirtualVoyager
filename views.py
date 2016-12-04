@@ -36,6 +36,12 @@ def welcome_user():
                 return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
             
 
+@app.route('/<username>/logout')
+def logout_user():
+    change_user_logged_in(username, False)
+    return redirect(url)
+
+
 @app.route('/<username>/search')
 def search(username):
     if not authenticated(username):
