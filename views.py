@@ -28,7 +28,7 @@ def welcome_user():
                 return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
 
         elif request.args.get("signup", None):
-            name = request.form['name']
+            name = request.form.get('name', None)
             valid_signup = username and password and name and create_user(username, password, name)
             if valid_signup:
                 return redirect(url + "/{}/search".format(username))
@@ -100,6 +100,9 @@ def get_user_profile():
 
 def authenticated(username, password=None):
     user = get_user_by_username(username)
+    if not user:
+        return False
+
     user_password = user[1]
     logged_in = user[3]
 
@@ -205,8 +208,8 @@ def create_user(username, password, name):
     if user:
         return False
     else:
-        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, 'True'))
-	conn.commit()
+        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, True))
+	    conn.commit()
         return True
 
 
