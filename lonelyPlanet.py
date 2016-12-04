@@ -3,9 +3,11 @@ import urllib2
 import requests
 from selenium import webdriver
 from pyvirtualdisplay import Display
+import requests
+import sys
 
 def main():
-    keyword = "tropical"
+    keyword = " ".join(sys.argv[1:])
     destinations = selenium(keyword)#get_best_location(keyword)
     for destination,image in destinations:
         print destination, image
@@ -39,10 +41,12 @@ def get_best_location(keyword):
 def selenium(keyword):
 	destinations = []
 	keyword = urllib2.quote(keyword)
+	url = 'http://www.lonelyplanet.com/search?q={}&type=place'.format(keyword)
+	print(requests.get(url).status_code)
 	display = Display(visible=0, size=(800,600))
 	display.start()
 	driver = webdriver.Firefox()#executable_path='../../../../bin/geckodriver'); print 'hello'
-	driver.get('http://www.lonelyplanet.com/search?q=rock%20climbing&type=place')
+	driver.get(url)
 	webpage = driver.page_source
 	driver.close()
 	
@@ -54,8 +58,12 @@ def selenium(keyword):
 		result = content[i]
 		name = result.find_all("h3", class_="search__result-title copy--h1")[0]
 		destination = name.getText().strip()
-		smallImage = result.find('img')['src']
-		image = smallImage[smallImage.index('http'):]
+		smallImage = result.find('img')
+		if smallImage:
+		    smallImage = smallImage['src']
+		    image = smallImage[smallImage.index('http'):]
+		else:
+		    image = None
 		destinations.append((destination, image))
 
 	return destinations
