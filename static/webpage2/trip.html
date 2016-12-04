@@ -14,6 +14,18 @@
       height: 5vw;
     }
   </style>
+  <script>
+    function clickLike() {
+      var button = document.getElementById("likebutton");
+      var liked = document.getElementById("like-data").data();
+      if (like == "True") {
+        button.src = document.getElementById("like-button-url").data();
+      }
+      else {
+        button.src = document.getElementById("dislike-button-url").data()
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -25,7 +37,10 @@
   </nav>
   <div class="o-container">
     <h1 class="o-header__title">Your {{keyword}} Trip</h1>
-    <img class="like" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+    <meta id="like-data" data-name="{{liked}}">
+    <meta id="like-button-url" data-name="{{ url_for('static', filename='webpage2/likebutton.png') }}">
+    <meta id="dislike-button-url" data-name="{{ url_for('static', filename='webpage2/dislikebutton.png')}}">
+    <img class="like" id="likebutton" src="{{ url_for('static', filename='webpage2/likebutton.png') }}">
   </div>
 </header>
 
