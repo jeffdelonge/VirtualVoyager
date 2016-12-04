@@ -131,7 +131,7 @@ def get_best_locations(keyword):
 	
     display = Display(visible=0, size=(800,600))
     display.start()
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(log_path='/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log')
     driver.get(url)
     webpage = driver.page_source
     driver.close()
