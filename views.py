@@ -75,9 +75,9 @@ def get_trip(username, keyword, lpnum):
     location5 = list(cur.fetchone())
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
     trip = [location1, location2, location3, location4, location5]
-    raise Exception("TRIP LOCATIONS: {}".format(trip))
+    names = ['Martinique', 'Nicaragua', 'Thailand', 'Samoa', 'Panama']
     coords = []
-    for location in trip:
+    for location in names:
         coords.append(get_location_coords(location[4]))
     trip = [location_to_dict(location) for location in trip]  
     '''
