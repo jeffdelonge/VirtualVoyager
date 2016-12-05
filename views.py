@@ -76,6 +76,9 @@ def get_trip(username, keyword, lpnum):
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
     trip = [location1, location2, location3, location4, location5]
+    coords = []
+    for location in trip:
+        coords.append(get_location_coords(location))
     trip = [location_to_dict(location) for location in trip]
 
     '''if not trip: 
@@ -83,7 +86,6 @@ def get_trip(username, keyword, lpnum):
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
 	    conn.commit()
-
     trip = get_trip_by_keyword(keyword)
     if trip:
         locations = get_trip_locations(keyword)
@@ -94,8 +96,7 @@ def get_trip(username, keyword, lpnum):
     '''
 
     trip = get_best_locations(keyword)
-    
-    return render_template('webpage2/trip.html', trip=trip, keyword=keyword, liked=False)
+    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
