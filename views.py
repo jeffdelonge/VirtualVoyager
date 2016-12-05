@@ -182,10 +182,9 @@ def get_trip_by_keyword(keyword):
 
 
 def get_location_coords(location_name):
-    rv = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'.format(location_name))
+    rv = requests.get('https://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'.format(location_name))
     data = rv.json()
     coords = data['results'][0]['geometry']['location']
-    raise Exception("LOCATION NAME: {}".format(location_name))
     return (coords['lat'], coords['lng'])
 
 
