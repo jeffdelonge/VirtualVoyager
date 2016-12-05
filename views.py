@@ -107,6 +107,8 @@ def get_trip(username, keyword, lpnum):
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
 
     coords = []
+    names = [location['name'] for location in trip]
+    raise Exception("Location names here: {}".format(name))
     for location in trip:
         coords.append(get_location_coords(location['name']))
 
