@@ -87,7 +87,7 @@ def get_trip(username, keyword, lpnum):
     trip_exists = get_trip_by_keyword(keyword) != None
     if not trip_exists:
         possible_locations = get_best_locations(keyword)
-        raise Exception("best locations here: {}".format(possible_locations))
+        #raise Exception("best locations here: {}".format(possible_locations))
         has_go_nexts = False
         for location in possible_locations[lpnum:]:
             go_nexts = get_location_go_nexts(location)
