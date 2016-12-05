@@ -272,7 +272,7 @@ def create_user(username, password, name):
     if user:
         return False
     else:
-        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', '{}')".format(username, password, name, True))
+        cur.execute("INSERT INTO User VALUES ('{}', '{}', '{}', {})".format(username, password, name, True))
 	conn.commit()
         return True
 
