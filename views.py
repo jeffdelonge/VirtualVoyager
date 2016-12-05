@@ -196,8 +196,13 @@ def get_best_locations(keyword):
     return list(set(destinations))
 
 
-def get_trip_locations(keyword):
-    cur.execute("SELECT LocationName FROM TripLocation WHERE TripKeyword='{}'".format(keyword))
+def get_trip_locations(keyword, lpnum):
+    cur.execute('''
+                SELECT LocationName 
+                FROM TripLocation 
+                WHERE TripKeyword='{}' AND LPNum={}
+                '''.format(keyword, lpnum))
+
     trip_locations = cur.fetchall()
     #raise Exception("Trip location names: {}".format(trip_locations))
     locations = [get_location_by_name(loc[0]) for loc in trip_locations]
