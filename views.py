@@ -84,20 +84,22 @@ def get_trip(username, keyword, lpnum):
     '''
     
     lpnum = int(lpnum)
+
+    possible_locations = get_best_locations(keyword)
+    #raise Exception("best locations here: {}".format(possible_locations))
+    has_go_nexts = False
+    for location in possible_locations[lpnum:]:
+        go_nexts = get_location_go_nexts(location)
+        if go_nexts and go_nexts[0][0] != 'EMPTY':
+            has_go_nexts = True
+            break
+        lpnum += 1
+
+    if not has_go_nexts:
+        return redirect(url + "/{}/search".format(username))
+
     trip_exists = get_trip_by_keyword(keyword, lpnum) != None
     if not trip_exists:
-        possible_locations = get_best_locations(keyword)
-        #raise Exception("best locations here: {}".format(possible_locations))
-        has_go_nexts = False
-        for location in possible_locations[lpnum:]:
-            go_nexts = get_location_go_nexts(location)
-            if go_nexts and go_nexts[0][0] != 'EMPTY':
-                has_go_nexts = True
-                break
-            lpnum += 1
-
-        if not has_go_nexts:
-            return redirect(url + "/{}/search".format(username))
         best_location = possible_locations[lpnum]
         best_location = best_location.replace(" ", "_")
         create_trip(keyword, best_location, username, lpnum)
