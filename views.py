@@ -77,7 +77,7 @@ def get_trip(username, keyword, lpnum):
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
     trip = [location1, location2, location3, location4, location5]
     '''
-
+    lpnum = int(lpnum)
     trip_exists = get_trip_by_keyword(keyword) != None
     if not trip_exists:
         possible_locations = get_best_locations(keyword)
