@@ -255,9 +255,9 @@ def change_user_logged_in(username, logged_in):
 def get_location_go_nexts(location_name):
     # Get all associated go nexts with location
     cur.execute('''
-                SELECT next_name, next_coords
+                SELECT NextName, NextCoords
                 FROM LocationGoNext
-                WHERE source_name LIKE '%{}%'
+                WHERE SourceName LIKE '%{}%'
                 '''.format(location_name))
     rv = cur.fetchall()
     return rv
