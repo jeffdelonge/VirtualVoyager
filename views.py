@@ -179,7 +179,7 @@ def create_location_image(location_name):
         return
 
     key = 'AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'
-    rv = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?key={}&input={}&type=geocode&'.format(key, query))
+    rv = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?key={}&input={}&type=geocode&'.format(key, location_name))
     data = rv.json()
     if data['status'] != 'OK':
         return
