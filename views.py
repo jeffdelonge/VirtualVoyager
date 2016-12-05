@@ -87,6 +87,7 @@ def get_trip(username, keyword, lpnum):
     create_trip_user(username, keyword, lpnum)
     trip = get_trip_locations(keyword)
 
+    raise Exception("trip: {}".format(trip))
     coords = []
     for location in trip:
         coords.append(get_location_coords(location['name']))
