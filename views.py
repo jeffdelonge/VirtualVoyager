@@ -254,6 +254,7 @@ def change_user_logged_in(username, logged_in):
 
 def get_location_go_nexts(location_name):
     # Get all associated go nexts with location
+    db_location_name = location_name.replace(" ", "_")
     cur.execute('''
                 SELECT NextName, NextCoords
                 FROM LocationGoNext
