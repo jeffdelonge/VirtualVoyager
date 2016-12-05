@@ -66,8 +66,8 @@ with open('pages.json') as data_file:
 	data = json.load(data_file)
 
 for page in data['pages']:
-#	if page['page_title'] != 'Chicago':
-#		continue
+	if page['page_title'] != 'Chicago':
+		continue
 	print ""
 	print page['page_title']
 	searchName = page['page_title'].replace("_", " ")
@@ -80,8 +80,9 @@ for page in data['pages']:
 	text = text.replace("\'", "")
 #	print text
 	name = page['page_title'].encode('utf-8')
-	goNexts = grabGoNexts(text)
-	print goNexts
+	get_location_coords(page['page_title'])
+#	goNexts = grabGoNexts(text)
+#	print goNexts
 #	for loc in goNexts:
 #		cur.execute('INSERT INTO `Location Go Next` (SourceName, NextName) VALUES (\"{}\",\"{}\")'.format(name, loc))
 
