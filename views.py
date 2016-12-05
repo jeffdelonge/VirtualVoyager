@@ -376,7 +376,7 @@ def recommend_trip(username):
 		for trip_info in rv:
             keyword = trip_info[0]
             lpnum = trip_info[1]
-			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, keyword, lpnum + 1))
+			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum + 1))
 			recommended[1].append(keyword + " {}".format(lpnum+1))
 
 	return recommended
@@ -396,8 +396,10 @@ def past_trips(username):
 		return None
 	else:
 		for trip_info in rv:
-			past[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, trip_info[0], trip_info[1]))
-			past[1].append(trip_info[0] + " " + trip_info[1])
+            keyword = trip_info[0]
+            lpnum = trip_info[1]
+			past[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum))
+			past[1].append(keyword + " {}".format(lpnum))
 			
 	return past
 
