@@ -336,5 +336,5 @@ def get_trip_info(base_location_name):
 def location_to_dict(location):
     location_dict = {'description':location[0],'eat':location[1],
                      'see':location[2], 'do':location[3],
-                     'name':location[4], 'photo':location[5]}
+                     'name':location[4].replace("_", " "), 'photo':location[5]}
     return location_dict
