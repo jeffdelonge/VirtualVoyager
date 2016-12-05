@@ -321,7 +321,7 @@ def create_trip(keyword, location_name, user, lpnum):
     # Create trip
     cur.execute('''
                 INSERT INTO Trip
-                VALUES ('{}', '{}')
+                VALUES ('{}', '{}', {})
                 '''.format(keyword, location_name, lpnum))
     conn.commit()
 
