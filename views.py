@@ -179,7 +179,7 @@ def get_location_coords(location_name):
 def create_location_image(location_name):
     cur.execute("SELECT * FROM Photo WHERE LocationName='{}'".format(location_name)
     if cur.fetchone():
-        return
+        return None
 
     key = 'AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'
     rv = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?key={}&input={}&type=geocode&'.format(key, query))
