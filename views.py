@@ -75,7 +75,7 @@ def get_trip(username, keyword, lpnum):
     location5 = list(cur.fetchone())
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
     trip = [location1, location2, location3, location4, location5]
-    names = ['Martinique', 'Nicaragua', 'Thailand', 'Samoa', 'Panama']
+    names = ['Chicago', 'Chicago', 'Chicago', 'Chicago', 'Chicago']
     coords = []
     for location in names:
         coords.append(get_location_coords(location))
@@ -89,7 +89,12 @@ def get_trip(username, keyword, lpnum):
         
         has_go_nexts = False
         for location in possible_locations[lpnum:]:
-            go_nexts = get_location_go_
+            go_nexts = get_location_go_nexts(location)
+            if go_nexts and go_nexts[0][0] != 'EMPTY':
+                has_go_nexts = True
+                break
+        if has_go_nexts:
+            return redirect(url + 
         create_trip(keyword, best_location, username)
 
     create_trip_user(username, keyword, lpnum)
