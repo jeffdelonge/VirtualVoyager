@@ -82,12 +82,11 @@ def get_trip(username, keyword, lpnum):
     trip = [location_to_dict(location) for location in trip]  
     return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
     '''
+    
     lpnum = int(lpnum)
     trip_exists = get_trip_by_keyword(keyword) != None
     if not trip_exists:
         possible_locations = get_best_locations(keyword)
-        best_location = possible_locations[lpnum]
-        
         has_go_nexts = False
         for location in possible_locations[lpnum:]:
             go_nexts = get_location_go_nexts(location)
@@ -99,6 +98,7 @@ def get_trip(username, keyword, lpnum):
         if not has_go_nexts:
             return redirect(url + "/{}/search".format(username))
         best_location = possible_locations[lpnum]
+        best_location = best_location.replace(" ", "_")
         create_trip(keyword, best_location, username)
     #raise Exception("CREATED TRIP HERE")
     create_trip_user(keyword, username, lpnum)
@@ -114,7 +114,7 @@ def get_trip(username, keyword, lpnum):
     '''
 
     liked = bool(get_trip_user(keyword, username, lpnum)[3])
-    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=liked)
+    return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
