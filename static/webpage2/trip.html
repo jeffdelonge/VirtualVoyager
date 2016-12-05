@@ -14,6 +14,11 @@
       height: 5vw;
       margin-left: 47.5vw;
     }
+    .tripPhoto {
+      width: 20vw;
+      height: auto;
+      margin-left: 10vw;
+    }
   </style>
   <script>
     function sendLikePost(var liked) {
@@ -49,7 +54,7 @@
   <meta id="lpnum" data-name="{{lpnum}}/">
   <meta id="userURL" data-name="http://fa16-cs411-47.cs.illinois.edu/{{username}}/search/{{keyword}}/">
   <nav class="o-header-nav">
-    <a href="http://fa16-cs411-47.cs.illinois.edu" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>   Back to Search</a>
+    <a href="http://fa16-cs411-47.cs.illinois.edu/{{username}}/search" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>   Back to Search</a>
     <h1 class="o-header_title" style="color:white;" align="center">VirtualVoyager</h1>
     <a href="http://fa16-cs411-47.cs.illinois.edu/user_profile" class="o-header-nav__link">My Profile   <i class="fa fa-star"></i></a>
   </nav>
@@ -88,7 +93,7 @@
         <div class="c-tab is-active">
           <div class="c-tab__content">
             <h2 style='align: "center";'>{{ trip[i]['name'] }}</h2>
-            <img src="{{ trip[i]['photo'] }}">
+            <img class="tripPhoto" src="{{ trip[i]['photo'] }}">
             <p>{{ trip[i]['description'] }}</p>
           </div>
         </div>
