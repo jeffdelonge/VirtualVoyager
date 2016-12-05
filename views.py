@@ -93,6 +93,7 @@ def get_trip(username, keyword, lpnum):
             go_nexts = get_location_go_nexts(location)
             lpnum += 1
             if go_nexts and go_nexts[0][0] != 'EMPTY':
+                raise Exception("Good go nexts: {}".format(go_nexts))
                 has_go_nexts = True
                 break
 
