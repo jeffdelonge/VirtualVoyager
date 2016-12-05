@@ -16,6 +16,18 @@
     }
   </style>
   <script>
+    function sendLikePost(var liked) {
+      var baseurl = document.getElementById("userURL").getAttribute("data-name");
+      var lpnum = document.getElementById("lpnum").getAttribute("data-name");
+      var url = baseurl + lpnum + liked;
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+              callback(xmlHttp.responseText);
+      }
+      xmlHttp.open("GET", url, true); // true for asynchronous
+      xmlHttp.send(null);
+    }
     function clickLike() {
       var button = document.getElementById("likebutton");
       var likeMeta = document.getElementById("like-data");
@@ -34,6 +46,8 @@
 <body>
 
 <header class="o-header">
+  <meta id="lpnum" data-name="{{lpnum}}/">
+  <meta id="userURL" data-name="http://fa16-cs411-47.cs.illinois.edu/{{username}}/search/{{keyword}}/">
   <nav class="o-header-nav">
     <a href="http://fa16-cs411-47.cs.illinois.edu" class="o-header-nav__link"><i class="fa fa-arrow-left"></i>   Back to Search</a>
     <h1 class="o-header_title" style="color:white;" align="center">VirtualVoyager</h1>
