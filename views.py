@@ -34,7 +34,7 @@ def welcome_user():
                 return redirect(url + "/{}/search".format(username))
             else:
                 return render_template('webpage2/welcome-form/welcome.html', login_failed=True)
-            
+
 
 @app.route('/<username>/logout')
 def logout_user(username):
@@ -58,11 +58,11 @@ def example_query():
     return render_template('example_query.html', query_name=query_name, query=query)
 
 
-@app.route('/<username>/search/<keyword>', methods=['GET'])
-def get_trip(username, keyword):
+@app.route('/<username>/search/<keyword>/<lpnum>', methods=['GET'])
+def get_trip(username, keyword, lpnum):
     if not authenticated(username):
-        return render_templated('webpage2/welcome-form/welcome.html', login_failed=True) 
-        
+        return render_templated('webpage2/welcome-form/welcome.html', login_failed=True)
+
     location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
     location1 = list(cur.fetchone())
     location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
@@ -81,24 +81,35 @@ def get_trip(username, keyword):
 
     trip = [location1, location2, location3, location4, location5]
     trip = [location_to_dict(location) for location in trip]
-    '''if not trip: 
+    '''
+    if not trip:
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
 	    conn.commit()
-    
+
     trip = get_trip_by_keyword(keyword)
     if trip:
-        locations = get_trip_locations(keyword) 
+        locations = get_trip_locations(keyword)
     else:
         possible_locations = get_best_locations(keyword)
-        best_location = locations[0] 
-         
-    trip = get_best_locations(keyword)
-'''
-    
+        best_location = locations[lpnum]
+        create_trip(keyword, best_location, username)
+    '''
+
     return render_template('webpage2/trip.html', trip=trip, keyword=keyword, liked=False)
 
+
+@app.route('/<username>/search/<keyword>/<lpnum>/<like>')
+def like_trip(username, keyword, lpnum, like):
+    like = bool(like)
+    curr.execute('''
+                UPDATE TripAssessment
+                SET Assessment={}
+                WHERE TripKeyword='{}' AND Username='{}' AND LPNum={}
+                '''.format(like, keyword, username, lpnum))
+
+    conn.commit()
 
 @app.route('/user_profile')
 def get_user_profile():
@@ -139,8 +150,8 @@ def get_best_locations(keyword):
     #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
     #webpage = urllib2.urlopen(request).read()
     #request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.4.0"})#, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
-	
-    
+
+
     display = Display(visible=0, size=(800,600))
     display.start()
     driver = webdriver.Firefox(log_path=gecko_driver_log_path)
@@ -168,7 +179,7 @@ def get_trip_locations(keyword):
     trip_locations = cur.fetchall()
     locations = [get_location_by_name(tr[1]) for tr in trip_locations]
     return locations
-        
+
 
 def get_trip_by_keyword(keyword):
     cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
@@ -183,10 +194,32 @@ def get_location_coords(location_name):
     return (coords['lat'], coords['lng'])
 
 
+def create_location_image(location_name):
+    cur.execute("SELECT * FROM Photo WHERE LocationName='{}'".format(location_name)
+    if cur.fetchone():
+        return
+
+    key = 'AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'
+    rv = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?key={}&input={}&type=geocode&'.format(key, query))
+    data = rv.json()
+    if data['status'] != 'OK':
+        return None
+
+    location = data['predictions'][0]
+    place_id = location['place_id']
+    rv = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&placeid={}'.format(key, place_id))
+    data = rv.json()['result']
+    photo_ref = data['photos'][0]['photo_reference']
+    url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={}&key={}'.format(photo_ref, key)
+
+    cur.execute("INSERT INTO Photo VALUES ('{}', '{})".format(location_name, url))
+    conn.commit()
+
+
 def get_location_by_name(name):
     cur.execute('''
-                SELECT l.Coordinates, l.Description, l.Eat, l.See, l.Do, l.Name, p.URL 
-                FROM Location l, Photo p 
+                SELECT l.Description, l.Eat, l.See, l.Do, l.Name, p.URL
+                FROM Location l, Photo p
                 WHERE l.Name='{}' AND p.LocationName = '{}'
                 '''.format(name))
     location = cur.fetchone()
@@ -207,8 +240,8 @@ def create_trip_location(keyword, location_name):
     conn.commit()
 
 
-def create_trip_user(keyword, username, date):
-    cur.execute("INSERT INTO TripUser VALUES ('{}','{}','{}')".format(keyword, username, date))
+def create_trip_user(keyword, username, lpnum):
+    cur.execute("INSERT INTO TripUser VALUES ('{}','{}',{})".format(keyword, username, lpnum))
     conn.commit()
 
 
@@ -232,7 +265,7 @@ def change_user_logged_in(username, logged_in):
     conn.commit()
 
 
-def create_trip(keyword, location_name, user, date):
+def create_trip(keyword, location_name, user):
     '''
     Create trip from location's go next
     '''
@@ -247,22 +280,28 @@ def create_trip(keyword, location_name, user, date):
     if not rv:
         raise ValueError('Location {} does not exist'.format(location_name))
 
+    create_location_image(location_name)
     # Get info and create location for all go nexts
     for location in rv:
         name = location[0]
         coords = location[1]
-        create_trip_location(keyword, name) 
-    
+        create_trip_location(keyword, name)
+        create_location_image(name)
+
     # Create trip
-    create_trip_user(keyword, user, date)
+    create_trip_user(keyword, user, lpnum)
     cur.execute('''
                 INSERT INTO Trip
                 VALUES ('{}', '{}')
                 '''.format(keyword, location_name))
 
+    trip = [get_location_by_name(location[0]) for location in rv]
+    trip.append(get_location_by_name(location_name))
+    return trip
+
 
 def location_to_dict(location):
-    location_dict = {'coords':location[0], 'description':location[0],
-                     'eat':location[1], 'see':location[2], 'do':location[3],
+    location_dict = {'description':location[0],'eat':location[1],
+                     'see':location[2], 'do':location[3],
                      'name':location[4], 'photo':location[5]}
     return location_dict
