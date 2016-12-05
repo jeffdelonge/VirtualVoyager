@@ -84,7 +84,6 @@ def get_trip(username, keyword, lpnum):
     trip = [location_to_dict(location) for location in trip]
 
     '''if not trip: 
->>>>>>> b3bb5248531ec41fcf348c20e277ed54a063c352
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
@@ -147,36 +146,6 @@ def get_best_locations(keyword):
     destinations = []
 
     keyword = urllib2.quote(keyword)
-<<<<<<< HEAD
-    url = "http://www.lonelyplanet.com/search?q={}&type=place".format(keyword)
-    gecko_driver_log_path = '/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log'
-
-    #website prevents bot scraping. pretend to be mozilla
-    #request = urllib2.Request(url, headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"})
-    #webpage = urllib2.urlopen(request).read()
-    #request = requests.get(url, headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.4.0"})#, proxies = {'http':'http://fa16-cs411-47.cs.illinois.edu'})
-
-
-    display = Display(visible=0, size=(800,600))
-    display.start()
-    driver = webdriver.Firefox(log_path=gecko_driver_log_path)
-    driver.get(url)
-    webpage = driver.page_source
-    driver.close()
-
-    soup=BeautifulSoup(webpage, "lxml")
-    #print soup.prettify().encode('UTF-8')
-
-    content = soup.find_all("a", class_="link--wrapper")
-    for i in [0,2,3,4,5]:
-        result = content[i]
-        name = result.find_all("h3", class_="search__result-title copy--h1")[0]
-        destination = name.getText().strip()#' '.join(topResult.getText().strip().split()[1:])
-        smallImage = result.find('img')['src']
-        image = smallImage[smallImage.index('http'):]
-        destinations.append((destination, image))
-
-=======
     url = "https://www.viator.com/search/"+keyword
     response = urllib2.urlopen(url)
     soup=BeautifulSoup(response.read(), "lxml")
@@ -184,11 +153,10 @@ def get_best_locations(keyword):
     content = soup.find_all("p", class_="man mts note xsmall")
     for c in content:
         result = str(c)
-	result = result[result.index(',')+2:]
-	result = result[:result.index('<')-1]
-	destinations.append(result)
+        result = result[result.index(',')+2:]
+        result = result[:result.index('<')-1]
+        destinations.append(result)
        
->>>>>>> b3bb5248531ec41fcf348c20e277ed54a063c352
     return destinations
 
 
