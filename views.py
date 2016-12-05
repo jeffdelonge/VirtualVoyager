@@ -188,9 +188,11 @@ def create_location_image(location_name):
     place_id = location['place_id']
     rv = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&placeid={}'.format(key, place_id))
     data = rv.json()['result']
-    raise Exception("Google maps api request failed: {}".format(data.keys()))
-    photo_ref = data['photos'][0]['photo_reference']
-    url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={}&key={}'.format(photo_ref, key)
+    if 'photos' not in data:
+        url = None
+    else:
+        photo_ref = data['photos'][0]['photo_reference']
+        url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={}&key={}'.format(photo_ref, key)
 
     cur.execute("INSERT INTO Photo VALUES ('{}', '{}')".format(location_name, url))
     conn.commit()
