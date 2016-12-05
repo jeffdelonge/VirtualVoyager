@@ -361,7 +361,7 @@ def recommend_trip(username):
 	cur.execute('''
 			SELECT u.TripKeyword, u.LPNum
 			FROM TripUser u
-			WHERE u.Assessment = 1 AND u.Username = '{}' AND u.LPNum = SELECT max(u1.LPNum)
+			WHERE u.Assessment = 1 AND u.Username = '{}' AND u.LPNum = SELECT MAX(u1.LPNum)
                                                                        FROM TripUser u1
                                                                        WHERE u1.TripKeyword = u.TripKeyword
 			'''.format(username))
