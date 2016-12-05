@@ -174,7 +174,7 @@ def get_best_locations(keyword):
         else:
             result = split[0]
         result = result.split('<')[0]
-        result.strip()
+        result = result.strip()
 
         #result = result[result.index(',')+2:]
         #result = result[:result.index('<')-1]
