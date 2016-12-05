@@ -93,7 +93,7 @@ def get_trip(username, keyword, lpnum):
             has_go_nexts = True
             break
         lpnum += 1
-    raise Exception("LPNum: {}, Location: {} Possible locations: {}".format(lpnum, possible_locations[lpnum], possible_locations))
+
     if not has_go_nexts:
         return redirect(url + "/{}/search".format(username))
 
@@ -359,9 +359,11 @@ def location_to_dict(location):
 
 def recommend_trip(username):
 	cur.execute('''
-			SELECT TripKeyword, LPNum
-			FROM TripUser
-			WHERE Assessment = 1 AND Username = '{}'
+			SELECT u.TripKeyword, u.LPNum
+			FROM TripUser u
+			WHERE u.Assessment = 1 AND u.Username = '{}' AND u.LPNum = SELECT max(u1.LPNum)
+                                                                       FROM TripUser u1
+                                                                       WHERE u1.TripKeyword = u.TripKeyword
 			'''.format(username))
 			
 	rv = cur.fetchall()
