@@ -114,7 +114,7 @@ def get_trip(username, keyword, lpnum):
         coords.append(get_location_coords(location['name']))
     '''
 
-    liked = get_trip_user(keyword, username, lpnum)[3] == 'True'
+    liked = get_trip_user(keyword, username, lpnum)[3]
     return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
 
 
