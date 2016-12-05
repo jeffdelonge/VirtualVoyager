@@ -25,7 +25,9 @@
       var baseurl = document.getElementById("userURL").getAttribute("data-name");
       var lpnum = document.getElementById("lpnum").getAttribute("data-name");
       var url = baseurl + lpnum + liked;
-      document.window = url;
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", url, true); // true for asynchronous
+      xmlHttp.send(null);
     }
     function clickLike() {
       var button = document.getElementById("likebutton");

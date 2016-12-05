@@ -114,13 +114,13 @@ def get_trip(username, keyword, lpnum):
         coords.append(get_location_coords(location['name']))
     '''
 
-    liked = bool(get_trip_user(keyword, username, lpnum)[3])
+    liked = get_trip_user(keyword, username, lpnum)[3] == 'True'
     return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
 def like_trip(username, keyword, lpnum, like):
-    like = bool(like)
+    like = like == 'True'
     cur.execute('''
                 UPDATE TripUser
                 SET Assessment={}
