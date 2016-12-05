@@ -128,7 +128,7 @@ def like_trip(username, keyword, lpnum, like):
                 '''.format(like, keyword, username, lpnum))
 
     conn.commit()
-    return True
+
 
 @app.route('/user_profile')
 def get_user_profile():
