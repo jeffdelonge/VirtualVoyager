@@ -143,10 +143,9 @@ def delete_past_trip(username, keyword, lpnum):
     return redirct(profile_url)
 
 
-@app.route('/user_profile')
-def get_user_profile():
-    return render_template('webpage/user.html', user="Jeff")
-
+@app.route('/<username>')
+def get_user_profile(username):
+    return render_template('webpage2/profile.html', recommended=recommend_trip(username), past=past_trips(username))		
 
 def authenticated(username, password=None):
     user = get_user_by_username(username)
@@ -350,3 +349,44 @@ def location_to_dict(location):
                      'see':location[2], 'do':location[3],
                      'name':location[4].replace("_", " "), 'photo':location[5]}
     return location_dict
+
+def recommend_trip(username):
+	cur.execute('''
+			SELECT TripKeyword, LPNum
+			FROM TripUser
+			WHERE Assessment = 1 AND Username = '{}'
+			'''.format(username))
+			
+	rv = cur.fetchall()
+	
+	recommended = [[], []];
+	
+	if not rv:
+		return None
+	else:
+		for trip_info in rv:
+			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, trip_info[0], trip_info[1] + 1))
+			recommended[1].append(trip_info[0] + " " + (trip_info[1] + 1))
+
+	return recommended
+		
+def past_trips(username):
+	cur.execute('''
+			SELECT TripKeyword, LPNum
+			FROM TripUser
+			WHERE Username = '{}'
+			'''.format(username))
+			
+	rv = cur.fetchall()
+	
+	past = [[], []];
+	
+	if not rv:
+		return None
+	else:
+		for trip_info in rv:
+			past[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, trip_info[0], trip_info[1]))
+			past[1].append(trip_info[0] + " " + trip_info[1])
+			
+	return past
+
