@@ -84,7 +84,7 @@ def get_trip(username, keyword, lpnum):
     '''
     
     lpnum = int(lpnum)
-    trip_exists = get_trip_by_keyword(keyword) != None
+    trip_exists = get_trip_by_keyword(keyword, lpnum) != None
     if not trip_exists:
         possible_locations = get_best_locations(keyword)
         #raise Exception("best locations here: {}".format(possible_locations))
@@ -191,8 +191,8 @@ def get_trip_locations(keyword):
     return locations
 
 
-def get_trip_by_keyword(keyword):
-    cur.execute("SELECT * FROM Trip WHERE Keyword='{}'".format(keyword))
+def get_trip_by_keyword(keyword, lpnum):
+    cur.execute("SELECT * FROM Trip WHERE Keyword='{}' AND LPNum='{}'".format(keyword, lpnum))
     trip = cur.fetchone()
     return trip
 
