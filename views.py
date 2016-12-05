@@ -107,7 +107,6 @@ def get_trip(username, keyword, lpnum):
         coords.append(get_location_coords(location['name']))
 
     liked = bool(get_trip_user(keyword, username, lpnum)[3])
-    '''
     return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=liked)
 
 
