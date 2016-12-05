@@ -180,7 +180,7 @@ def get_best_locations(keyword):
         #result = result[:result.index('<')-1]
         destinations.append(result)
        
-    return destinations
+    return list(set(destinations))
 
 
 def get_trip_locations(keyword):
