@@ -83,10 +83,10 @@ def get_trip(username, keyword, lpnum):
     return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
     '''
     
-    lpnum = int(lpnum)
 
     possible_locations = get_best_locations(keyword)
-    #raise Exception("best locations here: {}".format(possible_locations))
+    lpnum = min(int(lpnum), len(possible_locations))
+    raise Exception("best locations here: {}".format(possible_locations))
     has_go_nexts = False
     for location in possible_locations[lpnum:]:
         go_nexts = get_location_go_nexts(location)
