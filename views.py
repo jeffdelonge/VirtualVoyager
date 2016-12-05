@@ -203,7 +203,7 @@ def get_location_by_name(name):
                 SELECT l.Description, l.Eat, l.See, l.Do, l.Name, p.URL
                 FROM Location l, Photo p
                 WHERE l.Name='{}' AND p.LocationName = '{}'
-                '''.format(name))
+                '''.format(name, name))
     location = cur.fetchone()
 
     if location:
