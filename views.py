@@ -104,7 +104,7 @@ def get_trip(username, keyword, lpnum):
     #raise Exception("CREATED TRIP HERE")
     create_trip_user(keyword, username, lpnum)
     #raise Exception("CREATED TRIP USER HERE")
-    trip = get_trip_locations(keyword)
+    trip = get_trip_locations(keyword, lpnum)
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
 
     '''
