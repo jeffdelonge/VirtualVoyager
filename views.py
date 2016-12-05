@@ -167,8 +167,15 @@ def get_best_locations(keyword):
     content = soup.find_all("p", class_="man mts note xsmall")
     for c in content:
         result = str(c)
-        result = result[result.index(',')+2:]
-        result = result[:result.index('<')-1]
+        split = result.split(',')
+        if len(split) > 1:
+            result = split[-1]
+        else:
+            result = split[0]
+        result = result.split('<')[0]
+
+        #result = result[result.index(',')+2:]
+        #result = result[:result.index('<')-1]
         destinations.append(result)
        
     return destinations
