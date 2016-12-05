@@ -256,7 +256,7 @@ def get_location_go_nexts(location_name):
     # Get all associated go nexts with location
     cur.execute('''
                 SELECT next_name, next_coords
-                FROM Location Go Next
+                FROM LocationGoNext
                 WHERE source_name LIKE '%{}%'
                 '''.format(location_name))
     rv = cur.fetchall()
