@@ -1,13 +1,8 @@
 from __init__ import app, cur, conn
 from flask import render_template, redirect, request
-from selenium import webdriver
 import requests
 import datetime
 import sys
-from pyvirtualdisplay import Display
-import lonelyPlanet
-
-# lonely planet imports
 from bs4 import BeautifulSoup
 import urllib2
 
