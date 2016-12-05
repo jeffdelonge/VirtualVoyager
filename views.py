@@ -58,7 +58,7 @@ def example_query():
 def get_trip(username, keyword, lpnum):
     if not authenticated(username):
         return render_templated('webpage2/welcome-form/welcome.html', login_failed=True)
-
+    '''
     location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
     location1 = list(cur.fetchone())
     location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
@@ -80,6 +80,7 @@ def get_trip(username, keyword, lpnum):
     for location in names:
         coords.append(get_location_coords(location))
     trip = [location_to_dict(location) for location in trip]  
+    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
     '''
     lpnum = int(lpnum)
     trip_exists = get_trip_by_keyword(keyword) != None
@@ -93,21 +94,21 @@ def get_trip(username, keyword, lpnum):
             if go_nexts and go_nexts[0][0] != 'EMPTY':
                 has_go_nexts = True
                 break
-        if has_go_nexts:
-            return redirect(url + 
+
+        if not has_go_nexts:
+            return redirect(url + "/{}/search".format(username))
         create_trip(keyword, best_location, username)
 
     create_trip_user(username, keyword, lpnum)
     trip = get_trip_locations(keyword)
 
-    raise Exception("trip: {}".format(trip))
     coords = []
     for location in trip:
         coords.append(get_location_coords(location['name']))
 
     liked = bool(get_trip_user(keyword, username, lpnum)[3])
     '''
-    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
+    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=liked)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
