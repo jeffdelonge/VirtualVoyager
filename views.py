@@ -173,15 +173,16 @@ def get_location_coords(location_name):
 
 
 def create_location_image(location_name):
-    cur.execute("SELECT * FROM Photo WHERE LocationName='{}'".format(location_name)
-    if cur.fetchone():
+    cur.execute("SELECT * FROM Photo WHERE LocationName='{}'".format(location_name))
+    photo = cur.fetchone()
+    if photo:
         return
 
     key = 'AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'
     rv = requests.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?key={}&input={}&type=geocode&'.format(key, query))
     data = rv.json()
     if data['status'] != 'OK':
-        return None
+        return
 
     location = data['predictions'][0]
     place_id = location['place_id']
