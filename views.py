@@ -194,7 +194,14 @@ def get_best_locations(keyword):
         #result = result[:result.index('<')-1]
         destinations.append(result)
        
-    return list(set(destinations))
+    dests = set() 
+    unique_destinations = []
+    for location in destinations:
+        if location not in dests:
+            unique_destinations.append(location)
+            dests.add(location)            
+
+    return unique_destinations
 
 
 def get_trip_locations(keyword, lpnum):
