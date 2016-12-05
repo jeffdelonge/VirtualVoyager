@@ -174,6 +174,7 @@ def get_best_locations(keyword):
         else:
             result = split[0]
         result = result.split('<')[0]
+        result.strip()
 
         #result = result[result.index(',')+2:]
         #result = result[:result.index('<')-1]
@@ -313,8 +314,9 @@ def create_trip(keyword, location_name, user):
     for location in go_nexts[:num_go_nexts]:
         name = location[0]
         coords = location[1]
-        create_trip_location(keyword, name)
-        create_location_image(name)
+        if name:
+            create_trip_location(keyword, name)
+            create_location_image(name)
 
     # Create trip
     cur.execute('''
