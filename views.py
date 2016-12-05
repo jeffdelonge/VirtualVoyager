@@ -93,7 +93,6 @@ def get_trip(username, keyword, lpnum):
             go_nexts = get_location_go_nexts(location)
             lpnum += 1
             if go_nexts and go_nexts[0][0] != 'EMPTY':
-                raise Exception("Good go nexts: {}".format(go_nexts))
                 has_go_nexts = True
                 break
 
@@ -296,7 +295,8 @@ def create_trip(keyword, location_name, user):
     create_trip_location(keyword, location_name)
     create_location_image(location_name)
     # Get info and create location for all go nexts
-    for location in go_nexts:
+    num_go_nexts = min(len(go_nexts), 4)
+    for location in go_nexts[:num_go_nexts]:
         name = location[0]
         coords = location[1]
         create_trip_location(keyword, name)
