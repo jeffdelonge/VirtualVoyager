@@ -80,6 +80,9 @@ def get_trip(username, keyword):
     location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
 
     trip = [location1, location2, location3, location4, location5]
+    coords = []
+    for location in trip:
+        coords.append(get_location_coords(location))
     trip = [location_to_dict(location) for location in trip]
     '''if not trip: 
         trip = [location1, location2, location3, location4, location5]
@@ -96,8 +99,7 @@ def get_trip(username, keyword):
          
     trip = get_best_locations(keyword)
 '''
-    
-    return render_template('webpage2/trip.html', trip=trip, keyword=keyword, liked=False)
+    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
 
 
 @app.route('/user_profile')

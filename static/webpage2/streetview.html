@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Street View</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #street-view {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="street-view"></div>
+    <script>
+      function getParamValue(paramName)
+      {
+          var url = window.location.search.substring(1); //get rid of "?" in querystring
+          var qArray = url.split('&'); //get key-value pairs
+          for (var i = 0; i < qArray.length; i++) 
+          {
+              var pArr = qArray[i].split('='); //split key and value
+              if (pArr[0] == paramName) {
+                  return parseFloat(pArr[1]); //return value as a float
+          }
+      }
+    </script>
+    <script>
+      var panorama;
+      function initialize() {
+        panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('street-view'),
+            {
+              position: {lat: getParamValue('latitude'), lng: getParamValue('longitude')},
+              pov: {heading: 165, pitch: 0},
+              zoom: 0
+            });
+      }
+    </script>
+    <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
+    </script>
+  </body>
+</html>
