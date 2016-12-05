@@ -40,10 +40,12 @@
       if (liked == "True") {
         button.src = document.getElementById("dislike-button-url").getAttribute("data-name");
         likeMeta.setAttribute("data-name", "False");
+        sendLikePost("False")
       }
       else {
         button.src = document.getElementById("like-button-url").getAttribute("data-name");
         likeMeta.setAttribute("data-name", "True");
+        sendLikePost("True")
       }
     }
   </script>
