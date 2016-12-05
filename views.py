@@ -312,9 +312,8 @@ def create_trip(keyword, location_name, user):
     for location in go_nexts[:num_go_nexts]:
         name = location[0]
         coords = location[1]
-        if name:
-            create_trip_location(keyword, name)
-            create_location_image(name)
+        create_trip_location(keyword, name)
+        create_location_image(name)
 
     # Create trip
     cur.execute('''
