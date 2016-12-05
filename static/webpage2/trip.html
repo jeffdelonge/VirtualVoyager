@@ -113,10 +113,8 @@
         <div class="c-tab">
           <div class="c-tab__content">
             <h2>Street View</h2>
-            <p>Sample Text</p>
-            <p>Lat { {coords[2*i]} }, Long { {coords[2*i+1]} }</p>
-            <iframe height="400px" width="100%" frameborder="0" scrolling="no" src="streetview.html?latitude={{coords[2*i]}}&longitude={{coords[2*i+1]}}" allowfullscreen=""></iframe>
-            <p>Sample Text</p>
+            <p>Lat { { coords[2*i] } }, Long { { coords[2*i+1] } }</p>
+            <iframe height="400px" width="100%" frameborder="0" scrolling="no" src="{{ url_for('static', filename='webpage2/streetview.html?latitude={{coords[2*i]}}&longitude={{coords[2*i+1]}}') }}" allowfullscreen=""></iframe>
           </div>
         </div>
       </div>
