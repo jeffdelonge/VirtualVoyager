@@ -100,7 +100,7 @@ def get_trip(username, keyword, lpnum):
             return redirect(url + "/{}/search".format(username))
         best_location = possible_locations[lpnum]
         best_location = best_location.replace(" ", "_")
-        create_trip(keyword, best_location, username)
+        create_trip(keyword, best_location, username, lpnum)
     #raise Exception("CREATED TRIP HERE")
     create_trip_user(keyword, username, lpnum)
     #raise Exception("CREATED TRIP USER HERE")
@@ -249,8 +249,8 @@ def get_location_by_coords(coords):
     return location
 
 
-def create_trip_location(keyword, location_name):
-    cur.execute("INSERT INTO TripLocation VALUES ('{}','{}')".format(keyword, location_name))
+def create_trip_location(keyword, location_name, lpnum):
+    cur.execute("INSERT INTO TripLocation VALUES ('{}','{}', {})".format(keyword, location_name, lpnum))
     conn.commit()
 
 
@@ -299,7 +299,7 @@ def get_location_go_nexts(location_name):
     return rv
 
 
-def create_trip(keyword, location_name, user):
+def create_trip(keyword, location_name, user, lpnum):
     '''
     Create trip from location's go next
     '''
@@ -307,7 +307,7 @@ def create_trip(keyword, location_name, user):
     if not go_nexts:
         raise ValueError('Location {} does not exist'.format(location_name))
 
-    create_trip_location(keyword, location_name)
+    create_trip_location(keyword, location_name, lpnum)
     create_location_image(location_name)
     # Get info and create location for all go nexts
     num_go_nexts = min(len(go_nexts), 4)
@@ -315,22 +315,15 @@ def create_trip(keyword, location_name, user):
         name = location[0]
         coords = location[1]
         if name:
-            create_trip_location(keyword, name)
+            create_trip_location(keyword, name, lpnum)
             create_location_image(name)
 
     # Create trip
     cur.execute('''
                 INSERT INTO Trip
                 VALUES ('{}', '{}')
-                '''.format(keyword, location_name))
+                '''.format(keyword, location_name, lpnum))
     conn.commit()
-
-
-def get_trip_info(base_location_name):
-    go_nexts = get_location_go_nexts(location_name)
-    trip = [get_location_by_name(location[0]) for location in go_nexts] 
-    trip.append(get_location_by_name(location_name))
-    return trip
 
 
 def location_to_dict(location):
