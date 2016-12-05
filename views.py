@@ -128,6 +128,7 @@ def like_trip(username, keyword, lpnum, like):
                 '''.format(like, keyword, username, lpnum))
 
     conn.commit()
+    return redirect("{}/{}/search/{}/{}".format(url, username, keyword, lpnum))
 
 
 @app.route('/user_profile')
