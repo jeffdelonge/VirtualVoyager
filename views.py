@@ -114,7 +114,7 @@ def get_trip(username, keyword, lpnum):
     '''
 
     liked = bool(get_trip_user(keyword, username, lpnum)[3])
-    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=liked)
+    return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
