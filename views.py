@@ -136,7 +136,7 @@ def delete_past_trip(username, keyword, lpnum):
     cur.execute('''
                 DELETE FROM TripUser
                 WHERE Username='{}' AND TripKeyword='{}' AND LPNum={}
-                '''.format(username, keyword, lpnum)
+                '''.format(username, keyword, lpnum))
     conn.commit()
     profile_url = "{}/{}".format(url, username) 
     return redirct(profile_url)
