@@ -98,6 +98,7 @@ def get_trip(username, keyword, lpnum):
 
         if not has_go_nexts:
             return redirect(url + "/{}/search".format(username))
+        best_location = possible_locations[lpnum]
         create_trip(keyword, username, best_location)
 
     create_trip_user(keyword, username, lpnum)
