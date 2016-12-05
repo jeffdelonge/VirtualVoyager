@@ -225,7 +225,7 @@ def create_trip_location(keyword, location_name):
 def create_trip_user(keyword, username, lpnum):
     trip_user = get_trip_user(keyword, username, lpnum)
     if not trip_user:
-        cur.execute("INSERT INTO TripUser VALUES ('{}','{}',{})".format(keyword, username, lpnum))
+        cur.execute("INSERT INTO TripUser VALUES ('{}','{}', {}, 0)".format(keyword, username, lpnum))
         conn.commit()
 
 
