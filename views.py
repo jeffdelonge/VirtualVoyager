@@ -78,7 +78,7 @@ def get_trip(username, keyword, lpnum):
     names = ['Martinique', 'Nicaragua', 'Thailand', 'Samoa', 'Panama']
     coords = []
     for location in names:
-        coords.append(get_location_coords(location[4]))
+        coords.append(get_location_coords(location))
     trip = [location_to_dict(location) for location in trip]  
     '''
     lpnum = int(lpnum)
