@@ -121,7 +121,7 @@ def get_trip(username, keyword, lpnum):
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
 def like_trip(username, keyword, lpnum, like):
     like = bool(like)
-    curr.execute('''
+    cur.execute('''
                 UPDATE TripUser
                 SET Assessment={}
                 WHERE TripKeyword='{}' AND Username='{}' AND LPNum={}
