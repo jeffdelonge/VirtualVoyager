@@ -82,8 +82,6 @@ def get_trip(username, keyword, lpnum):
     if not trip_exists:
         possible_locations = get_best_locations(keyword)
         best_location = possible_locations[lpnum]
-        while not get_location_go_nexts(best_location):
-            lpnum += 
         raise Exception("LOCATION GO NEXTS: {}".format(get_location_go_nexts(best_location)))
         create_trip(keyword, best_location, username)
 
