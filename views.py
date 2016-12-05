@@ -115,14 +115,14 @@ def get_trip(username, keyword, lpnum):
     '''
 
     liked = bool(get_trip_user(keyword, username, lpnum)[3])
-    return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username)
+    return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
 
 
 @app.route('/<username>/search/<keyword>/<lpnum>/<like>')
 def like_trip(username, keyword, lpnum, like):
     like = bool(like)
     curr.execute('''
-                UPDATE TripAssessment
+                UPDATE TripUser
                 SET Assessment={}
                 WHERE TripKeyword='{}' AND Username='{}' AND LPNum={}
                 '''.format(like, keyword, username, lpnum))
