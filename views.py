@@ -191,7 +191,7 @@ def create_location_image(location_name):
     photo_ref = data['photos'][0]['photo_reference']
     url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={}&key={}'.format(photo_ref, key)
 
-    cur.execute("INSERT INTO Photo VALUES ('{}', '{})".format(location_name, url))
+    cur.execute("INSERT INTO Photo VALUES ('{}', '{}')".format(location_name, url))
     conn.commit()
 
 
