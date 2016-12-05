@@ -5,6 +5,7 @@ import requests
 import datetime
 import sys
 from pyvirtualdisplay import Display
+import lonelyPlanet
 
 # lonely planet imports
 from bs4 import BeautifulSoup
@@ -81,8 +82,9 @@ def get_trip(username, keyword, lpnum):
 
     trip = [location1, location2, location3, location4, location5]
     trip = [location_to_dict(location) for location in trip]
-    '''
-    if not trip:
+
+    '''if not trip: 
+>>>>>>> b3bb5248531ec41fcf348c20e277ed54a063c352
         trip = [location1, location2, location3, location4, location5]
         for location in trip:
 	    cur.execute('INSERT INTO TripLocation (Trip, location_name) VALUES (\"{}\",\"{}\")'.format(keyword, location[4]))
@@ -94,9 +96,11 @@ def get_trip(username, keyword, lpnum):
     else:
         possible_locations = get_best_locations(keyword)
         best_location = locations[lpnum]
-        create_trip(keyword, best_location, username)
+        trip = create_trip(keyword, best_location, username)
     '''
 
+    trip = get_best_locations(keyword)
+    
     return render_template('webpage2/trip.html', trip=trip, keyword=keyword, liked=False)
 
 
@@ -140,9 +144,10 @@ def get_best_locations(keyword):
     Return information needed to make trip and location AND IMAGE URL
     '''
 
-    destinations = [];
+    destinations = []
 
     keyword = urllib2.quote(keyword)
+<<<<<<< HEAD
     url = "http://www.lonelyplanet.com/search?q={}&type=place".format(keyword)
     gecko_driver_log_path = '/var/www/VirtualVoyager/VirtualVoyager/geckodriver.log'
 
@@ -171,6 +176,19 @@ def get_best_locations(keyword):
         image = smallImage[smallImage.index('http'):]
         destinations.append((destination, image))
 
+=======
+    url = "https://www.viator.com/search/"+keyword
+    response = urllib2.urlopen(url)
+    soup=BeautifulSoup(response.read(), "lxml")
+
+    content = soup.find_all("p", class_="man mts note xsmall")
+    for c in content:
+        result = str(c)
+	result = result[result.index(',')+2:]
+	result = result[:result.index('<')-1]
+	destinations.append(result)
+       
+>>>>>>> b3bb5248531ec41fcf348c20e277ed54a063c352
     return destinations
 
 
@@ -190,7 +208,7 @@ def get_trip_by_keyword(keyword):
 def get_location_coords(location_name):
     rv = requests.get('http://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI'.format(location_name))
     data = rv.json()
-    coords = data['results']['geometry']['location']
+    coords = data['results'][0]['geometry']['location']
     return (coords['lat'], coords['lng'])
 
 

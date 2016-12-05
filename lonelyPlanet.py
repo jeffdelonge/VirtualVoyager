@@ -7,12 +7,14 @@ import requests
 import sys
 
 def main():
-    keyword = " ".join(sys.argv[1:])
-    destinations = selenium(keyword)#get_best_location(keyword)
+    f = open('out.txt', 'w')
+
+    keyword = "rock climbing"#" ".join(sys.argv[1:])
+    destinations = get_best_locations(keyword)#get_best_location(keyword)
     for destination,image in destinations:
         print destination, image
 
-def get_best_location(keyword): 
+def get_best_locations(keyword): 
     destinations = []
 
     keyword = urllib2.quote(keyword)
