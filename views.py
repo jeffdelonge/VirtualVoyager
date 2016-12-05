@@ -131,6 +131,17 @@ def like_trip(username, keyword, lpnum, like):
     return redirect("{}/{}/search/{}/{}".format(url, username, keyword, lpnum))
 
 
+@app.route('/<username>/search/<keyword>/<lpnum>/delete')
+def delete_past_trip(username, keyword, lpnum):
+    cur.execute('''
+                DELETE FROM TripUser
+                WHERE Username='{}' AND TripKeyword='{}' AND LPNum={}
+                '''.format(username, keyword, lpnum)
+    conn.commit()
+    profile_url = "{}/{}".format(url, username) 
+    return redirct(profile_url)
+
+
 @app.route('/user_profile')
 def get_user_profile():
     return render_template('webpage/user.html', user="Jeff")
