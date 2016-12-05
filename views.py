@@ -93,7 +93,7 @@ def get_trip(username, keyword, lpnum):
             has_go_nexts = True
             break
         lpnum += 1
-    raise Exception("LPNum: {}, Location: {}".format(lpnum, possible_locations[lpnum]))
+    raise Exception("LPNum: {}, Location: {} Possible locations: {}".format(lpnum, possible_locations[lpnum], possible_locations))
     if not has_go_nexts:
         return redirect(url + "/{}/search".format(username))
 
