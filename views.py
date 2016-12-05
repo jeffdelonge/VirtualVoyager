@@ -264,7 +264,7 @@ def get_location_go_nexts(location_name):
     cur.execute('''
                 SELECT NextName, NextCoords
                 FROM LocationGoNext
-                WHERE SourceName LIKE '%{}%'
+                WHERE SourceName LIKE '%{}'
                 '''.format(db_location_name))
     rv = cur.fetchall()
     return rv
