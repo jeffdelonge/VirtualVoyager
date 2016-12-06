@@ -13,10 +13,10 @@
   
  <script>
   function deleteElement(id)
-  {
-    $("ul li[data-id=" + id + "]").remove();
+  { 
 	window.location = "{{past[0][id]}}" + "/delete";
-  }
+	 $("ul li[data-id=" + id + "]").remove(); 
+ }
   </script>
  
   </head>
