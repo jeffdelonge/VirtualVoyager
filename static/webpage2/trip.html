@@ -117,7 +117,23 @@
           <div class="c-tab__content">
             <h2>Street View</h2>
             <p>Lat { { coords[2*i] } }, Long { { coords[2*i+1] } }</p>
-            <iframe height="400px" width="100%" frameborder="0" scrolling="no" src="{{ url_for('static', filename='webpage2/streetview.html?latitude={{coords[2*i]}}&longitude={{coords[2*i+1]}}') }}" allowfullscreen=""></iframe>
+            <div id="street-view"></div>
+            <script>
+              var panorama;
+              function initialize() {
+                panorama = new google.maps.StreetViewPanorama(
+                    document.getElementById('street-view'),
+                    {
+                      position: {lat: {{coords[2*i]}}, lng: {{coords[2*i]}} },
+                      pov: {heading: 165, pitch: 0},
+                      zoom: 0
+                    });
+              }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
+            </script>
+<!--            <iframe height="400px" width="100%" frameborder="0" scrolling="no" src="{{ url_for('static', filename='webpage2/streetview.html?latitude={{coords[2*i]}}&longitude={{coords[2*i+1]}}') }}" allowfullscreen=""></iframe>
+-->
           </div>
         </div>
       </div>
