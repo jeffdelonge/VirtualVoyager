@@ -392,6 +392,7 @@ def past_trips(username):
 			'''.format(username))
 			
 	rv = cur.fetchall()
+    raise Exception("QUERY RESULTS: {}", rv)
 	
 	past = [[], []];
 	
