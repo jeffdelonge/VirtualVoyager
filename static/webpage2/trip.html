@@ -139,7 +139,7 @@
     </script>
     <script>
       var panorama;
-      function initialize() {
+      window.onload = function initialize() {
         panorama = new google.maps.StreetViewPanorama(
             document.getElementById('street-view{{i}}'),
             {
