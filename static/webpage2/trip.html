@@ -63,6 +63,11 @@
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
 </script>
+<script>
+  function initialize() {
+    initialize_inner();
+  }
+</script>
 <main class="o-main">
   <div class="o-container">
     {% for i in range(trip|length) %}
@@ -121,7 +126,7 @@
             <div id="street-view" style="height:300px;width=600px"></div>
             <script>
               var panorama;
-              function initialize() {
+              function initialize_inner() {
                 panorama = new google.maps.StreetViewPanorama(
                     document.getElementById('street-view'),
                     {
