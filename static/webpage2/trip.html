@@ -152,11 +152,9 @@
     {% endfor %}
     <script>
       function initialize() {
-        initialize0();
-        initialize1();
-        initialize2();
-        initialize3();
-        initialize4();
+        {% for i in range(trip|length) %}
+        initialize{{i}}();
+        {%endfor%}
       }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
