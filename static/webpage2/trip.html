@@ -118,12 +118,12 @@
         <div class="c-tab">
           <div class="c-tab__content">
             <h2>Street View</h2>
-            <div id="street-view{{i}}" style="height:300px;width=600px"></div>
+            <div id="street-view" style="height:300px;width=600px"></div>
             <script>
               var panorama;
               function initialize() {
                 panorama = new google.maps.StreetViewPanorama(
-                    document.getElementById('street-view{{i}}'),
+                    document.getElementById('street-view'),
                     {
                       position: {lat: {{coords[i][0]}}, lng: {{coords[i][1]}} },
                       pov: {heading: 165, pitch: 0},
