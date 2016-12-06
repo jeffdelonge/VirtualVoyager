@@ -140,7 +140,7 @@ def delete_past_trip(username, keyword, lpnum):
                 '''.format(username, keyword, lpnum))
     conn.commit()
     profile_url = "{}/{}".format(url, username) 
-    return redirct(profile_url)
+    return redirect(profile_url)
 
 
 @app.route('/<username>')
