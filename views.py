@@ -369,7 +369,7 @@ def recommend_trip(username):
     raise Exception("QUERY: {}".format(query))
 	cur.execute()
 			
-    raise Exception("Max query: {}".format(cur.fetchall()))
+   	raise Exception("Max query: {}".format(cur.fetchall()))
 	rv = cur.fetchall()
 
 	recommended = [[], []];
