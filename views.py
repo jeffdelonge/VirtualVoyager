@@ -359,15 +359,15 @@ def location_to_dict(location):
     return location_dict
 
 def recommend_trip(username):
-    cur.execute("SELECT MAX(u1.LPNum) FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword='sailing'".format(username))
+    cur.execute("".format(username))
     raise Exception("Max query: {}".format(cur.fetchall()))
     
 
 	cur.execute('''
 			SELECT u.TripKeyword, u.LPNum
 			FROM TripUser u
-			WHERE u.Assessment = 1 AND u.Username = '{}' AND u.LPNum = (SELECT MAX(u1.LPNum) FROM TripUser u1 WHERE u1.TripKeyword = u.TripKeyword AND u1.Username = u.Username)
-			'''.format(username))
+			WHERE u.Assessment = 1 AND u.Username = '{}' AND u.LPNum >= ALL(SELECT MAX(u1.LPNum) FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword=u.TripKeyword)
+			'''.format(username, username))
 			
 	rv = cur.fetchall()
 	
