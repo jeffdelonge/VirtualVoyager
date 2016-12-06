@@ -219,7 +219,6 @@ def create_location_image(location_name):
     location = data['predictions'][0]
     place_id = location['place_id']
     rv = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&placeid={}'.format(key, place_id))
-    raise Exception("PHOTO RESPONSE: {}".format(rv.json()))
     data = rv.json()['result']
     if 'photos' not in data:
         url = None
