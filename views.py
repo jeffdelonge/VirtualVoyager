@@ -83,12 +83,10 @@ def get_trip(username, keyword, lpnum):
     trip = get_trip_locations(keyword, lpnum)
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
 
-    '''
     coords = []
     names = [location['name'] for location in trip]
     for location in trip:
         coords.append(get_location_coords(location['name']))
-    '''
 
     liked = get_trip_user(keyword, username, lpnum)[3]
     return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
@@ -311,7 +309,7 @@ def create_trip(keyword, location_name, user, lpnum):
     create_trip_location(keyword, location_name, lpnum)
     create_location_image(location_name)
     # Get info and create location for all go nexts
-    num_go_nexts = min(len(go_nexts), 4)
+    num_go_nexts = min(len(go_nexts), 5)
     for location in go_nexts[:num_go_nexts]:
         name = location[0]
         coords = location[1]
@@ -357,7 +355,7 @@ def recommend_trip(username):
 	recommended = [[], []];
 
 	if not rv:
-		return None
+		return [] 
 	else:
 		for trip_info in rv:
 			keyword = trip_info[0]
@@ -381,7 +379,7 @@ def past_trips(username):
 	past = [[], []];
 	
 	if not rv:
-		return None
+		return [] 
 	else:
 		for trip_info in rv:
             		keyword = trip_info[0]

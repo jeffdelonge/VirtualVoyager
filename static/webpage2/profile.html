@@ -53,21 +53,25 @@
           <div class="c-tab__content">
             <h2>All Past Trips</h2>
 		<ol>
-            	{% for i in range(past|length) %}
+      {% if past %}
+            {% for i in range(past[0]|length) %}
 			<meta id="{{i}}" data-url="{{past[0][i]}}">
             		<li data-id="{{i}}" class="o-header__title" style="list-style-type: none; font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{past[0][i]}}"> {{past[1][i]}} </a><input type="button" onclick="deleteElement({{i}})" value="x"></li>
           	{% endfor %}
           	</ol>
+      {% endif %}
 	</div>
         </div>
         <div class="c-tab">
           <div class="c-tab__content">
             <h2>Trips Recommended by Likes</h2>
-            	{% for j in range(recommended|length) %}
+            {% if recommended %}
+            	{% for j in range(recommended[0]|length) %}
             		<ul>
             			<li class="o-header__title" style="list-style-type: none; font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{recommended[0][j]}}"> {{recommended[1][j]}} </a></li>
 	       			</ul>
 	       		{% endfor %}
+            {% endif %}
 	       </div>
         </div>
       </div>
