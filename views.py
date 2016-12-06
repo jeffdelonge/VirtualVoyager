@@ -367,20 +367,21 @@ def recommend_trip(username):
 			'''.format(username)
 
 	query = '''	
-			SELECT  maxLP
+
+			SELECT  v.TripKeyword, v.LPNum
 			FROM 	TripUser v, (
                         	SELECT MAX(u.LPNum) AS maxLP
 	                        FROM TripUser u
         	                WHERE u.Assessment = 1 AND u.Username = '{}'
 				) Temp
-		
+			WHERE v.Assessment = 1 AND v.Username = '{}' AND v.LPNum = maxLP
 			
 			'''.format(username, username)
 
 
 	cur.execute(query)
 	rv = cur.fetchall()
-	raise Exception("{}".format(rv))
+	#raise Exception("{}".format(rv))
 	recommended = [[], []];
 
 	if not rv:
