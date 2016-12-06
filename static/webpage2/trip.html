@@ -123,14 +123,14 @@
           <div class="c-tab__content">
             <h2>Street View{{i}}</h2>
             <div id="street-view"></div>
-            <p>Lat { { coords[2*i] } }, Long { { coords[2*i+1] } }</p>
+            <p>lat: {{coords[i][0]}}, lng: {{coords[i][1]}}</p>
             <script>
               var panorama;
               function initialize() {
                 panorama = new google.maps.StreetViewPanorama(
                     document.getElementById('street-view'),
                     {
-                      position: {lat: {{coords[2*i]}}, lng: {{coords[2*i]}} },
+                      position: {lat: {{coords[i][0]}}, lng: {{coords[i][1]}} },
                       pov: {heading: 165, pitch: 0},
                       zoom: 0
                     });
