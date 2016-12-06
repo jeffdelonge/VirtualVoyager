@@ -64,7 +64,7 @@ def get_trip(username, keyword, lpnum):
     has_go_nexts = False
     for location in possible_locations[lpnum:]:
         go_nexts = get_location_go_nexts(location)
-        if go_nexts and go_nexts[0][0] and go_nexts[0][0] != 'EMPTY':
+        if go_nexts and go_nexts[0][0] != 'EMPTY':
             has_go_nexts = True
             break
         lpnum += 1
@@ -82,11 +82,10 @@ def get_trip(username, keyword, lpnum):
     #raise Exception("CREATED TRIP USER HERE")
     trip = get_trip_locations(keyword, lpnum)
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
+    trip = [loc for loc in trip if loc]
     coords = []
-    '''
     for location in trip:
         coords.append(get_location_coords(location['name']))
-    '''
 
     liked = get_trip_user(keyword, username, lpnum)[3]
     return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
@@ -185,8 +184,9 @@ def get_trip_locations(keyword, lpnum):
                 '''.format(keyword, lpnum))
 
     trip_locations = cur.fetchall()
-    raise Exception("Trip location names: {}".format(trip_locations))
+    #raise Exception("Trip location names: {}".format(trip_locations))
     locations = [get_location_by_name(loc[0]) for loc in trip_locations]
+    #raise Exception("Trip locations: {}".format(trip))
     return locations
 
 
