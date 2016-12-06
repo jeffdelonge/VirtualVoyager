@@ -58,38 +58,13 @@ def example_query():
 def get_trip(username, keyword, lpnum):
     if not authenticated(username):
         return render_templated('webpage2/welcome-form/welcome.html', login_failed=True)
-    '''
-    location1 = cur.execute("SELECT * FROM Location WHERE Name='Martinique'")
-    location1 = list(cur.fetchone())
-    location1.append("http://www.airtransat.com/getmedia/8304aca5-8ca0-4aa0-976d-cf11442d7871/Fort-de-France-thumbnail.jpg?width=515")
-    location2 = cur.execute("SELECT * FROM Location WHERE Name='Nicaragua'")
-    location2 = list(cur.fetchone())
-    location2.append('http://servicesaws.iadb.org/wmsfiles/images/0x0/nicaragua-32899.jpg')
-    location3 = cur.execute("SELECT * FROM Location WHERE Name='Thailand'")
-    location3 = list(cur.fetchone())
-    location3.append('http://newmedia.thomson.co.uk/live/vol/0/921d4b57639916341dfa76e38310ff7bc13b11e2/1080x608/web/ASIAFAREASTTHAILANDTHAILANDDES_000423KHAOLAKRES_002378.jpg')
-    location4 = cur.execute("SELECT * FROM Location WHERE Name='Samoa'")
-    location4 = list(cur.fetchone())
-    location4.append('https://lonelyplanetimages.imgix.net/mastheads/GettyImages-167450923_full.jpg?sharp=10&vib=20&w=1200')
-    location5 = cur.execute("SELECT * FROM Location WHERE Name='Panama'")
-    location5 = list(cur.fetchone())
-    location5.append('http://www.total.com/sites/default/files/styles/carrefour/public/thumbnails/image/panama.jpg')
-    trip = [location1, location2, location3, location4, location5]
-    names = ['Chicago', 'Chicago', 'Chicago', 'Chicago', 'Chicago']
-    coords = []
-    for location in names:
-        coords.append(get_location_coords(location))
-    trip = [location_to_dict(location) for location in trip]  
-    return render_template('webpage2/trip.html', trip=trip, coords=coords, keyword=keyword, liked=False)
-    '''
-    
 
     possible_locations = get_best_locations(keyword)
     lpnum = min(int(lpnum), len(possible_locations))
     has_go_nexts = False
     for location in possible_locations[lpnum:]:
         go_nexts = get_location_go_nexts(location)
-        if go_nexts and go_nexts[0][0] != 'EMPTY':
+        if go_nexts and go_nexts[0][0] and go_nexts[0][0] != 'EMPTY':
             has_go_nexts = True
             break
         lpnum += 1
