@@ -121,9 +121,9 @@
         </div>
         <div class="c-tab">
           <div class="c-tab__content">
-            <h2>Street View</h2>
-            <p>Lat { { coords[2*i] } }, Long { { coords[2*i+1] } }</p>
+            <h2>Street View{{i}}</h2>
             <div id="street-view"></div>
+            <p>Lat { { coords[2*i] } }, Long { { coords[2*i+1] } }</p>
             <script>
               var panorama;
               function initialize() {
