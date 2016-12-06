@@ -365,10 +365,7 @@ def recommend_trip(username):
 			FROM TripUser u
 			WHERE u.Assessment = 1 AND u.Username = '{}' 
 			'''.format(username)
-	raise Exception("QUERY: {}".format(query))
-	cur.execute()
-			
-   	raise Exception("Max query: {}".format(cur.fetchall()))
+	cur.execute(query)
 	rv = cur.fetchall()
 
 	recommended = [[], []];
@@ -392,6 +389,7 @@ def past_trips(username):
 			'''.format(username))
 			
 	rv = cur.fetchall()
+    raise Exception("QUERY RESULTS: {}", rv)
 	
 	past = [[], []];
 	
