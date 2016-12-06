@@ -145,7 +145,7 @@ def delete_past_trip(username, keyword, lpnum):
 
 @app.route('/<username>')
 def get_user_profile(username):
-    return render_template('webpage2/profile.html', recommended=recommend_trip(username), past=past_trips(username))		
+    return render_template('webpage2/profile.html', username=username, recommended=recommend_trip(username), past=past_trips(username))		
 
 
 def authenticated(username, password=None):
