@@ -359,7 +359,7 @@ def location_to_dict(location):
     return location_dict
 
 def recommend_trip(username):
-	subquery = "AND u.LPNum >= ALL(SELECT u1.LPNum FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword=u.TripKeyword)"
+	subquery = "AND u.LPNum >= ALL(SELECT u1.LPNum FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword=u.TripKeyword)".format(username)
 	query = '''
 			SELECT u.TripKeyword, u.LPNum
 			FROM TripUser u

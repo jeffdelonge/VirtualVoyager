@@ -14,7 +14,8 @@
  <script>
   function deleteElement(id)
   { 
-	window.location = "{{past[0][id]}}" + "/delete";
+	var url = document.getElementById(id).getAttribute("data-url");
+	window.location = url  + "/delete";
 	 $("ul li[data-id=" + id + "]").remove(); 
  }
   </script>
@@ -53,6 +54,7 @@
             <h2>All Past Trips</h2>
 		<ul>
             	{% for i in range(past|length) %}
+			<meta id="{{i}}" data-url="{{past[0][i]}}">
             		<li data-id="{{i}}" class="o-header__title" style="list-style-type: none; font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{past[0][i]}}"> {{past[1][i]}} </a><input type="button" onclick="deleteElement({{i}})" value="x"></li>
           	{% endfor %}
           	</ul>
