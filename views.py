@@ -185,7 +185,7 @@ def get_trip_locations(keyword, lpnum):
                 '''.format(keyword, lpnum))
 
     trip_locations = cur.fetchall()
-    #raise Exception("Trip location names: {}".format(trip_locations))
+    raise Exception("Trip location names: {}".format(trip_locations))
     locations = [get_location_by_name(loc[0]) for loc in trip_locations]
     return locations
 
