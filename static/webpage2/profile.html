@@ -13,10 +13,10 @@
   
  <script>
   function deleteElement(id)
-  {
-    $("ul li[data-id=" + id + "]").remove();
-	window.location = {{past[0][id]}} + "/delete";
-  }
+  { 
+	window.location = "{{past[0][id]}}" + "/delete";
+	 $("ul li[data-id=" + id + "]").remove(); 
+ }
   </script>
  
   </head>
@@ -53,7 +53,7 @@
             <h2>All Past Trips</h2>
             	{% for i in range(past|length) %}
             		<ul>
-            			<li data-id="i" class="o-header__title" style="font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{past[0][i]}}"> {{past[1][i]}} </a><input type="button" onclick="deleteElement(i)" value="x"></li>
+            			<li data-id="{{i}}" class="o-header__title" style="list-style-type: none; font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{past[0][i]}}"> {{past[1][i]}} </a><input type="button" onclick="deleteElement({{i}})" value="x"></li>
           			</ul>
           		{% endfor %}
           </div>
@@ -63,7 +63,7 @@
             <h2>Trips Recommended by Likes</h2>
             	{% for j in range(recommended|length) %}
             		<ul>
-            			<li class="o-header__title" style="font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{recommended[1][j]}}"> {{recommended[1][j]}} </a></li>
+            			<li class="o-header__title" style="list-style-type: none; font-size: 20px; font-weight: normal; margin: 0px;"><a href="{{recommended[0][j]}}"> {{recommended[1][j]}} </a></li>
 	       			</ul>
 	       		{% endfor %}
 	       </div>
