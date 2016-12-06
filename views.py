@@ -367,15 +367,15 @@ def recommend_trip(username):
 			
     raise Exception("Max query: {}".format(cur.fetchall()))
 	rv = cur.fetchall()
-	
+
 	recommended = [[], []];
-	
+
 	if not rv:
 		return None
 	else:
 		for trip_info in rv:
-            		keyword = trip_info[0]
-            		lpnum = trip_info[1]
+			keyword = trip_info[0]
+			lpnum = trip_info[1]
 			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum + 1))
 			recommended[1].append(keyword + " {}".format(lpnum+1))
 
