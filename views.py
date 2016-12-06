@@ -93,7 +93,7 @@ def get_trip(username, keyword, lpnum):
             has_go_nexts = True
             break
         lpnum += 1
-    raise Exception("LPNum: {}, Location: {} Possible locations: {}".format(lpnum, possible_locations[lpnum], possible_locations))
+
     if not has_go_nexts:
         return redirect(url + "/{}/search".format(username))
 
@@ -146,6 +146,7 @@ def delete_past_trip(username, keyword, lpnum):
 @app.route('/<username>')
 def get_user_profile(username):
     return render_template('webpage2/profile.html', recommended=recommend_trip(username), past=past_trips(username))		
+
 
 def authenticated(username, password=None):
     user = get_user_by_username(username)
@@ -358,22 +359,28 @@ def location_to_dict(location):
     return location_dict
 
 def recommend_trip(username):
-	cur.execute('''
-			SELECT TripKeyword, LPNum
-			FROM TripUser
-			WHERE Assessment = 1 AND Username = '{}'
-			'''.format(username))
+	subquery = "AND u.LPNum >= ALL(SELECT u1.LPNum FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword=u.TripKeyword)"
+	query = '''
+			SELECT u.TripKeyword, u.LPNum
+			FROM TripUser u
+			WHERE u.Assessment = 1 AND u.Username = '{}' 
+			'''.format(username)
+	raise Exception("QUERY: {}".format(query))
+	cur.execute()
 			
+   	raise Exception("Max query: {}".format(cur.fetchall()))
 	rv = cur.fetchall()
-	
+
 	recommended = [[], []];
-	
+
 	if not rv:
 		return None
 	else:
 		for trip_info in rv:
-			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, trip_info[0], trip_info[1] + 1))
-			recommended[1].append(trip_info[0] + " " + (trip_info[1] + 1))
+			keyword = trip_info[0]
+			lpnum = trip_info[1]
+			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum + 1))
+			recommended[1].append(keyword + " {}".format(lpnum+1))
 
 	return recommended
 		
@@ -392,8 +399,10 @@ def past_trips(username):
 		return None
 	else:
 		for trip_info in rv:
-			past[0].append("http://fa16-cs411-47.cs.illinois.edu/'{}'/search/'{}'/'{}'".format(username, trip_info[0], trip_info[1]))
-			past[1].append(trip_info[0] + " " + trip_info[1])
+            		keyword = trip_info[0]
+            		lpnum = trip_info[1]
+			past[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum))
+			past[1].append(keyword + " {}".format(lpnum))
 			
 	return past
 
