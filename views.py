@@ -82,8 +82,6 @@ def get_trip(username, keyword, lpnum):
     #raise Exception("CREATED TRIP USER HERE")
     trip = get_trip_locations(keyword, lpnum)
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
-    raise Exception("Trip length: {}".format(len(trip)))
-    trip = [location for location in trip if location]
     coords = []
     for location in trip:
         coords.append(get_location_coords(location['name']))
