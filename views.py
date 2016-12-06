@@ -367,16 +367,13 @@ def recommend_trip(username):
 			'''.format(username)
 
 	query = '''	
-
-			SELECT  v.TripKeyword, v.LPNum
-			FROM 	TripUser v, (
-                        	SELECT MAX(u.LPNum) AS maxLP
-	                        FROM TripUser u
-        	                WHERE u.Assessment = 1 AND u.Username = '{}'
-				) Temp
-			WHERE v.Assessment = 1 AND v.Username = '{}' AND v.LPNum = maxLP
+                      	SELECT u.TripKeyword, MAX(u.LPNum)
+	                FROM TripUser u
+        	        WHERE u.Assessment = 1 AND u.Username = '{}'
+			GROUP BY u.TripKeyword
 			
-			'''.format(username, username)
+			
+			'''.format(username)
 
 
 	cur.execute(query)
@@ -392,7 +389,8 @@ def recommend_trip(username):
 			lpnum = trip_info[1]
 			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum + 1))
 			recommended[1].append(keyword + " {}".format(lpnum+1))
-
+	#raise Exception(rv)
+	#raise Exception(len(recommended[0]))
 	return recommended
 		
 def past_trips(username):
