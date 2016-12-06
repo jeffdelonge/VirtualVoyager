@@ -139,7 +139,7 @@
     </script>
     <script>
       var panorama;
-      function initialize() {
+      function initialize{{i}}() {
         panorama = new google.maps.StreetViewPanorama(
             document.getElementById('street-view{{i}}'),
             {
@@ -150,6 +150,15 @@
       }
     </script>
     {% endfor %}
+    <script>
+      function initialize() {
+        initialize0();
+        initialize1();
+        initialize2();
+        initialize3();
+        initialize4();
+      }
+    </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
     </script>
   </div>
