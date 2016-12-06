@@ -64,7 +64,7 @@ def get_trip(username, keyword, lpnum):
     has_go_nexts = False
     for location in possible_locations[lpnum:]:
         go_nexts = get_location_go_nexts(location)
-        if go_nexts and go_nexts[0][0] and go_nexts[0][0] != 'EMPTY':
+        if go_nexts and go_nexts[0][0] != 'EMPTY':
             has_go_nexts = True
             break
         lpnum += 1
