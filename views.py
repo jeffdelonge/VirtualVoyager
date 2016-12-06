@@ -83,11 +83,9 @@ def get_trip(username, keyword, lpnum):
     trip = get_trip_locations(keyword, lpnum)
     #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
     trip = [location for location in trip if location]
-    raise Exception("TRIP HERE: {}".format(trip))
     coords = []
     for location in trip:
-        if location:
-            coords.append(get_location_coords(location['name']))
+        coords.append(get_location_coords(location['name']))
 
     liked = get_trip_user(keyword, username, lpnum)[3]
     return render_template('webpage2/trip.html', trip=trip, coords=None, keyword=keyword, liked=liked, username=username, lpnum=lpnum)
