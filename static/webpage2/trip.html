@@ -63,21 +63,7 @@
 
 <main class="o-main">
   <div class="o-container">
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
-    </script>
     {% for i in range(trip|length) %}
-    <script>
-      var panorama;
-      function initialize() {
-        panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('street-view{{i}}'),
-            {
-              position: {lat: {{coords[i][0]}}, lng: {{coords[i][1]}} },
-              pov: {heading: 165, pitch: 0},
-              zoom: 0
-            });
-      }
-    </script>
     <div class="o-section">
       <div id="tabs{{ i }}" class="c-tabs no-js">
         <div class="c-tabs-nav">
@@ -150,6 +136,22 @@
       });
 
       myTabs.init();
+    </script>
+    {% endfor %}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
+    </script>
+    {% for i in range(trip|length) %}
+    <script>
+      var panorama;
+      function initialize() {
+        panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('street-view{{i}}'),
+            {
+              position: {lat: {{coords[i][0]}}, lng: {{coords[i][1]}} },
+              pov: {heading: 165, pitch: 0},
+              zoom: 0
+            });
+      }
     </script>
     {% endfor %}
   </div>
