@@ -147,6 +147,7 @@ def delete_past_trip(username, keyword, lpnum):
 def get_user_profile(username):
     return render_template('webpage2/profile.html', recommended=recommend_trip(username), past=past_trips(username))		
 
+
 def authenticated(username, password=None):
     user = get_user_by_username(username)
     if not user:
@@ -358,6 +359,10 @@ def location_to_dict(location):
     return location_dict
 
 def recommend_trip(username):
+    cur.execute("SELECT MAX(u1.LPNum) FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword='sailing'"
+    raise Exception("Max query: {}".format(cur.fetchall()))
+    
+
 	cur.execute('''
 			SELECT u.TripKeyword, u.LPNum
 			FROM TripUser u
