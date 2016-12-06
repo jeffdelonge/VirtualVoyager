@@ -63,6 +63,8 @@
 
 <main class="o-main">
   <div class="o-container">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
+    </script>
     {% for i in range(trip|length) %}
     <div class="o-section">
       <div id="tabs{{ i }}" class="c-tabs no-js">
@@ -128,8 +130,6 @@
                       zoom: 0
                     });
               }
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoIJcakxVen5qGdu_PsV_ajdl33qwGskI&callback=initialize">
             </script>
 <!--            <iframe height="400px" width="100%" frameborder="0" scrolling="no" src="{{ url_for('static', filename='webpage2/streetview.html?latitude={{coords[2*i]}}&longitude={{coords[2*i+1]}}') }}" allowfullscreen=""></iframe>
 -->
