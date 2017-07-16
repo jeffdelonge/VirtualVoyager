@@ -77,12 +77,11 @@ def get_trip(username, keyword, lpnum):
         best_location = possible_locations[lpnum]
         best_location = best_location.replace(" ", "_")
         create_trip(keyword, best_location, username, lpnum)
-    #raise Exception("CREATED TRIP HERE")
+	
     create_trip_user(keyword, username, lpnum)
-    #raise Exception("CREATED TRIP USER HERE")
     trip = get_trip_locations(keyword, lpnum)
-    #raise Exception("GOT TRIP DICTS HERE: {}".format(trip))
     trip = [loc for loc in trip if loc]
+
     coords = []
     for location in trip:
         coords.append(get_location_coords(location['name']))
@@ -162,8 +161,6 @@ def get_best_locations(keyword):
         result = result.split('<')[0]
         result = result.strip()
 
-        #result = result[result.index(',')+2:]
-        #result = result[:result.index('<')-1]
         destinations.append(result)
        
     dests = set() 
@@ -184,9 +181,7 @@ def get_trip_locations(keyword, lpnum):
                 '''.format(keyword, lpnum))
 
     trip_locations = cur.fetchall()
-    #raise Exception("Trip location names: {}".format(trip_locations))
     locations = [get_location_by_name(loc[0]) for loc in trip_locations]
-    #raise Exception("Trip locations: {}".format(trip))
     return locations
 
 
@@ -308,6 +303,7 @@ def create_trip(keyword, location_name, user, lpnum):
 
     create_trip_location(keyword, location_name, lpnum)
     create_location_image(location_name)
+	
     # Get info and create location for all go nexts
     num_go_nexts = min(len(go_nexts), 5)
     for location in go_nexts[:num_go_nexts]:
@@ -332,13 +328,6 @@ def location_to_dict(location):
     return location_dict
 
 def recommend_trip(username):
-	subquery = "AND u.LPNum >= ALL(SELECT u1.LPNum FROM TripUser u1 WHERE u1.Username = '{}' AND u1.TripKeyword=u.TripKeyword)".format(username)
-	query = '''
-			SELECT u.TripKeyword, u.LPNum
-			FROM TripUser u
-			WHERE u.Assessment = 1 AND u.Username = '{}' 
-			'''.format(username)
-
 	query = '''	
                       	SELECT u.TripKeyword, MAX(u.LPNum)
 	                FROM TripUser u
@@ -351,7 +340,6 @@ def recommend_trip(username):
 
 	cur.execute(query)
 	rv = cur.fetchall()
-	#raise Exception("{}".format(rv))
 	recommended = [[], []];
 
 	if not rv:
@@ -362,10 +350,10 @@ def recommend_trip(username):
 			lpnum = trip_info[1]
 			recommended[0].append("http://fa16-cs411-47.cs.illinois.edu/{}/search/{}/{}".format(username, keyword, lpnum + 1))
 			recommended[1].append(keyword + " {}".format(lpnum+1))
-	#raise Exception(rv)
-	#raise Exception(len(recommended[0]))
+
 	return recommended
 		
+	
 def past_trips(username):
 	cur.execute('''
 			SELECT TripKeyword, LPNum
@@ -373,9 +361,7 @@ def past_trips(username):
 			WHERE Username = '{}'
 			'''.format(username))
 			
-	rv = cur.fetchall()
-    	#raise Exception("QUERY RESULTS: {}", rv)
-	
+	rv = cur.fetchall()	
 	past = [[], []];
 	
 	if not rv:
